@@ -60,3 +60,40 @@ export function PhotoField({ value, fallback, onChange }: { value: string; fallb
     </div>
   );
 }
+
+/** Resizes a banner to max 1600px wide JPEG data URL, keeping its shape. */
+async function toCover(file: File): Promise<string> {
+  const bmp = await createImageBitmap(file);
+  const w = Math.min(1600, bmp.width), h = Math.round((bmp.height * w) / bmp.width);
+  const canvas = document.createElement("canvas");
+  canvas.width = w; canvas.height = h;
+  canvas.getContext("2d")!.drawImage(bmp, 0, 0, w, h);
+  return canvas.toDataURL("image/jpeg", 0.82);
+}
+
+export function CoverField({ value, fallback, onChange }: { value: string; fallback: string | null; onChange: (v: string) => void }) {
+  const [error, setError] = useState("");
+  const src = value || fallback;
+  return (
+    <div className="space-y-2 text-sm">
+      {src ? <img src={src} alt="Banner" className="aspect-[1920/731] w-full rounded-xl object-cover" /> : <div className="aspect-[1920/731] w-full rounded-xl bg-secondary" />}
+      <label className="inline-block cursor-pointer rounded-lg border border-border px-3 py-1.5 font-medium hover:border-primary">
+        Upload new banner
+        <input type="file" accept="image/*" className="sr-only" onChange={async (e) => {
+          const f = e.target.files?.[0]; e.target.value = "";
+          if (!f) return;
+          if (!f.type.startsWith("image/")) return setError("Please choose an image file");
+          try {
+            setError("");
+            const url = await toCover(f);
+            if (url.length > 900_000) return setError("That image is too detailed — try a smaller file");
+            onChange(url);
+          } catch { setError("Couldn't read that image — try a JPG or PNG"); }
+        }} />
+      </label>
+      {value && <button type="button" className="ml-2 text-muted-foreground underline" onClick={() => onChange("")}>Use default banner</button>}
+      <p className="text-muted-foreground">Best at about 1920 × 730 (wide). Publish to update the live card.</p>
+      {error && <p className="text-destructive">{error}</p>}
+    </div>
+  );
+}

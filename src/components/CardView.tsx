@@ -97,27 +97,29 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
         </header>
 
         <section className="mt-3 overflow-hidden rounded-3xl border border-border bg-card">
-          <div className="relative h-32 sm:h-36" style={{ background: "var(--cover-gradient)" }}>
-            <div className="absolute inset-0 opacity-40" style={{ backgroundImage: "var(--cover-grid)", backgroundSize: "22px 22px" }} aria-hidden />
-            {company.length > 0 && (
-              <nav aria-label={lang === "zh" ? "關注拓域創科" : "Follow Tonric"} className="absolute right-3 top-3 flex items-center gap-1.5">
-                <span className="mr-1 text-[0.7rem] font-medium text-foreground/80">{lang === "zh" ? "關注拓域創科" : "Follow Tonric"}</span>
-                {company.map((s) => (
-                  <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`Tonric ${s.label}`} title={`Tonric ${s.label}`}
-                    className="grid size-9 place-items-center rounded-full border border-foreground/15 bg-background/50 text-foreground backdrop-blur-md transition hover:border-primary hover:text-primary active:scale-95">
-                    <s.icon className="size-4" aria-hidden />
-                  </a>
-                ))}
-              </nav>
-            )}
-          </div>
+          {card.cover || c.coverUrl ? (
+            <img src={card.cover || c.coverUrl || ""} alt={lang === "zh" ? "拓域創科橫幅" : "Tonric banner"} className="block aspect-[1920/731] w-full object-cover" />
+          ) : (
+            <div className="aspect-[1920/731] w-full" style={{ background: "var(--cover-gradient)" }} aria-hidden />
+          )}
           <div className="px-5 pb-5 sm:px-6 sm:pb-6">
-          <div className="relative z-10 -mt-12 flex items-end gap-4">
+          <div className="relative z-10 -mt-10 flex items-end gap-4">
             {card.headshot || c.headshotUrl ? (
               <img src={card.headshot || c.headshotUrl || ""} alt={t.photoAlt} className="size-24 shrink-0 rounded-full border-4 border-card object-cover ring-2 ring-primary/70" />
             ) : (
               <div className="grid size-24 shrink-0 place-items-center rounded-full border-4 border-card bg-secondary text-2xl font-semibold text-primary">{c.initials}</div>
             )}
+            {company.length > 0 && (
+                <nav aria-label={lang === "zh" ? "關注拓域創科" : "Follow Tonric"} className="mb-1 ml-auto flex items-center gap-1.5">
+                  <span className="mr-1 hidden text-[0.7rem] font-medium text-foreground/80 min-[380px]:inline">{lang === "zh" ? "關注拓域創科" : "Follow Tonric"}</span>
+                  {company.map((s) => (
+                    <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`Tonric ${s.label}`} title={`Tonric ${s.label}`}
+                      className="grid size-9 place-items-center rounded-full border border-foreground/15 bg-background/50 text-foreground backdrop-blur-md transition hover:border-primary hover:text-primary active:scale-95">
+                      <s.icon className="size-4" aria-hidden />
+                    </a>
+                  ))}
+                </nav>
+              )}
           </div>
           <div className="mt-3 min-w-0">
             <h1 className="text-[1.75rem] font-semibold leading-tight tracking-tight">{card.name.full}</h1>

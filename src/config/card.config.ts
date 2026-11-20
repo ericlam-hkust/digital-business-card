@@ -6,6 +6,7 @@
  * - `uiText`: fixed button and label text.
  */
 import headshot from "@/assets/eric-lam-headshot.jpg.asset.json";
+import cover from "@/assets/tonric-cover.png.asset.json";
 import logo from "@/assets/tonric-logo.png.asset.json";
 import type { CardData, Lang } from "@/lib/card-schema";
 
@@ -21,6 +22,7 @@ export const cardConfig = {
   cardPath: "/eric",
   vcardFileName: "Eric-Lam-Tonric.vcf",
   headshotUrl: headshot.url as string | null,
+  coverUrl: cover.url as string | null,
   logoUrl: logo.url as string | null,
   initials: "EL",
 };
@@ -38,6 +40,7 @@ export const defaultCard: CardData = {
   includeHiddenInContactFile: false,
   referrals: { visible: true, showNetwork: true, showIntro: true },
   headshot: "",
+  cover: "",
   socials: {
     facebook: { enabled: true, url: "https://www.facebook.com/tonric" },
     instagram: { enabled: true, url: "https://www.instagram.com/tonric.ai/" },
