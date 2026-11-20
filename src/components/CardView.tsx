@@ -136,6 +136,7 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
           <p className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground">
             <MapPin className="size-3.5 text-primary" aria-hidden /> {content.location}
           </p>
+          <p className="mt-4 text-[0.95rem] leading-relaxed text-foreground/90">{content.intro}</p>
           <button
             onClick={() => (banner ? downloadVCard(card) : window.location.assign("/api/public/vcard"))}
             className="mt-4 flex h-13 w-full items-center justify-center gap-2 rounded-2xl bg-primary text-base font-semibold text-primary-foreground transition hover:brightness-105 active:scale-[0.99]"
@@ -185,7 +186,6 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
           </ul>
             </div>
           )}
-          <p className="mt-5 text-[0.95rem] leading-relaxed text-foreground/90">{content.intro}</p>
           <AboutSection card={card} lang={lang} ui={t} embedded />
           </div>
           </section>
