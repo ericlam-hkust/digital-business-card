@@ -112,7 +112,7 @@ function CardPage() {
               <h1 className="text-[1.75rem] font-semibold leading-tight tracking-tight">{c.name.full}</h1>
               <p className="mt-1 text-sm text-foreground/90">{t.title}</p>
               <p className="text-sm text-muted-foreground">
-                {c.company} <span lang="zh-Hant">({c.companyZh})</span>
+                {c.company} <span lang="zh-Hant" className="whitespace-nowrap">({c.companyZh})</span>
               </p>
             </div>
           </div>
