@@ -136,23 +136,9 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
           <p className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground">
             <MapPin className="size-3.5 text-primary" aria-hidden /> {content.location}
           </p>
-          {rows.length > 0 && (
-            <nav aria-label="Quick contact" className="mt-4 flex justify-center gap-3">
-              {rows.map((r) => (
-                <a key={r.label} href={r.href} {...(r.ext ? { target: "_blank", rel: "noopener noreferrer" } : {})} aria-label={r.label} title={r.label}
-                  className="grid size-12 place-items-center rounded-full border border-border bg-secondary text-primary transition hover:border-primary/60 active:scale-95">
-                  <r.icon className="size-5" aria-hidden />
-                </a>
-              ))}
-            </nav>
-          )}
-
-          <p className="mt-5 text-[0.95rem] leading-relaxed text-foreground/90">{content.intro}</p>
-          <AboutSection card={card} lang={lang} ui={t} embedded />
-
           <button
             onClick={() => (banner ? downloadVCard(card) : window.location.assign("/api/public/vcard"))}
-            className="mt-5 flex h-13 w-full items-center justify-center gap-2 rounded-2xl bg-primary text-base font-semibold text-primary-foreground transition hover:brightness-105 active:scale-[0.99]"
+            className="mt-4 flex h-13 w-full items-center justify-center gap-2 rounded-2xl bg-primary text-base font-semibold text-primary-foreground transition hover:brightness-105 active:scale-[0.99]"
           >
             <Download className="size-5" aria-hidden /> {t.save}
           </button>
@@ -165,11 +151,20 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
             </button>
           </div>
           {manualUrl && <ManualCopy label={t.copyManual} url={manualUrl} />}
-          </div>
-          </section>
+          {rows.length > 0 && (
+            <nav aria-label="Quick contact" className="mt-4 flex justify-center gap-3">
+              {rows.map((r) => (
+                <a key={r.label} href={r.href} {...(r.ext ? { target: "_blank", rel: "noopener noreferrer" } : {})} aria-label={r.label} title={r.label}
+                  className="grid size-12 place-items-center rounded-full border border-border bg-secondary text-primary transition hover:border-primary/60 active:scale-95">
+                  <r.icon className="size-5" aria-hidden />
+                </a>
+              ))}
+            </nav>
+          )}
 
-        <section className="mt-4 rounded-3xl border border-border bg-card px-5 py-2 sm:px-6">
-          <ul className="divide-y divide-border">
+          {rows.length > 0 && (
+            <div className="mt-4 rounded-2xl border border-border px-4 py-1">
+              <ul className="divide-y divide-border">
             {rows.map((r) => (
               <li key={r.label}>
                 <a
@@ -188,7 +183,13 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
               </li>
             ))}
           </ul>
-        </section>
+            </div>
+          )}
+          <p className="mt-5 text-[0.95rem] leading-relaxed text-foreground/90">{content.intro}</p>
+          <AboutSection card={card} lang={lang} ui={t} embedded />
+          </div>
+          </section>
+
 
         {fans.length > 0 && (
           <section aria-labelledby="fans-h" className="mt-4 rounded-3xl border border-border bg-card px-5 py-4 sm:px-6">
