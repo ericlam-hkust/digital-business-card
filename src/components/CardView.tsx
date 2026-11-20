@@ -108,13 +108,13 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
             <div className="aspect-[1920/731] w-full" style={{ background: "var(--cover-gradient)" }} aria-hidden />
           )}
           <div className="px-5 pb-5 sm:px-6 sm:pb-6">
-          <div className="relative z-10 -mt-10 flex items-end gap-4">
+          <div className="relative z-10 -mt-10 flex items-start gap-4">
             {card.headshot || c.headshotUrl ? (
               <img src={card.headshot || c.headshotUrl || ""} alt={t.photoAlt} className="size-20 shrink-0 rounded-full sm:size-24 border-4 border-card object-cover ring-2 ring-primary/70" />
             ) : (
               <div className="grid size-20 shrink-0 place-items-center rounded-full sm:size-24 border-4 border-card bg-secondary text-2xl font-semibold text-primary">{c.initials}</div>
             )}
-            <div className="mb-1 flex min-w-0 flex-1 flex-col items-end gap-1.5 text-right">
+            <div className="mt-12 flex min-w-0 flex-1 flex-col items-end gap-1.5 text-right">
             {company.length > 0 && (
                 <nav aria-label={lang === "zh" ? "關注拓域創科" : "Follow Tonric"} className="flex items-center justify-end gap-1 min-[380px]:gap-1.5">
                   <span className="mr-1 hidden text-[0.7rem] font-medium text-foreground/80 min-[380px]:inline">{lang === "zh" ? "關注拓域創科" : "Follow Tonric"}</span>
