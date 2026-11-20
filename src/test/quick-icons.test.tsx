@@ -23,7 +23,10 @@ describe("contact icons row", () => {
     const parsed = cardDataSchema.parse({ ...rest, show: oldShow });
     expect(parsed.show.quickIcons).toBe(true);
   });
-  it("built-in card ships with the icons hidden", () => {
-    expect(defaultCard.show.quickIcons).toBe(false);
+  it("built-in card shows only LinkedIn and WhatsApp icons, and only Email and Call links", () => {
+    const s = defaultCard.show;
+    expect(s.quickIcons).toBe(true);
+    expect(s.quickIconItems).toEqual({ email: false, phone: false, card: false, linkedin: true, whatsapp: true });
+    expect([s.email, s.phone, s.digitalCard, s.linkedin, s.whatsapp]).toEqual([true, true, false, false, false]);
   });
 });

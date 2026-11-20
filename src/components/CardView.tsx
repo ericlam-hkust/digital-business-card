@@ -64,14 +64,16 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
     localStorage.setItem(LANG_KEY, next);
   };
 
-  const rows = [
-    { show: card.show.email && !!card.email, href: `mailto:${card.email}`, icon: Mail, key: "email" as const, label: t.email, value: card.email },
-    { show: card.show.phone && !!card.phone, href: `tel:${phoneE164}`, icon: Phone, key: "phone" as const, label: t.call, value: card.phone },
-    { show: card.show.digitalCard && !!url, href: url, icon: IdCard, key: "card" as const, label: t.digitalCard, value: url.replace(/^https?:\/\//, ""), ext: false },
-    { show: card.linkedin.enabled && !!card.linkedin.url, href: card.linkedin.url, icon: Linkedin, key: "linkedin" as const, label: t.linkedin, value: card.linkedin.url.replace(/^https?:\/\/(www\.)?/, ""), ext: true },
-    { show: card.whatsapp.enabled && !!card.whatsapp.number, href: whatsappHref(card.whatsapp.number), icon: WhatsAppIcon, key: "whatsapp" as const, label: t.whatsapp, value: whatsappLabel(card.whatsapp.number), ext: true },
+  const channels = [
+    { show: !!card.email, href: `mailto:${card.email}`, icon: Mail, key: "email" as const, label: t.email, value: card.email },
+    { show: !!card.phone, href: `tel:${phoneE164}`, icon: Phone, key: "phone" as const, label: t.call, value: card.phone },
+    { show: !!url, href: url, icon: IdCard, key: "card" as const, label: t.digitalCard, value: url.replace(/^https?:\/\//, ""), ext: false },
+    { show: !!card.linkedin.url, href: card.linkedin.url, icon: Linkedin, key: "linkedin" as const, label: t.linkedin, value: card.linkedin.url.replace(/^https?:\/\/(www\.)?/, ""), ext: true },
+    { show: !!card.whatsapp.number, href: whatsappHref(card.whatsapp.number), icon: WhatsAppIcon, key: "whatsapp" as const, label: t.whatsapp, value: whatsappLabel(card.whatsapp.number), ext: true },
   ].filter((r) => r.show);
-  const quickRows = rows.filter((r) => card.show.quickIconItems?.[r.key] !== false);
+  const quickRows = channels.filter((r) => card.show.quickIconItems?.[r.key] !== false);
+  const linkShow = { email: card.show.email, phone: card.show.phone, card: card.show.digitalCard, linkedin: card.show.linkedin, whatsapp: card.show.whatsapp };
+  const rows = channels.filter((r) => linkShow[r.key] !== false);
   const socials = card.socials;
   const strip = (u: string) => u.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
   const company = [

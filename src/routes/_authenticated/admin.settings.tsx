@@ -212,7 +212,7 @@ function SettingsPage() {
           </Section>
 
           <Section title="Contact and links">
-            <Toggle label="Show the contact icons under your name" checked={draft.show.quickIcons} onChange={set(["show", "quickIcons"])} />
+            <Toggle label="Show the round contact icons under your name" checked={draft.show.quickIcons} onChange={set(["show", "quickIcons"])} />
             {draft.show.quickIcons && (<div className="ml-4 space-y-2 border-l border-border pl-4">
               <Toggle label="Email icon" checked={draft.show.quickIconItems.email} onChange={set(["show", "quickIconItems", "email"])} />
               <Toggle label="Call icon" checked={draft.show.quickIconItems.phone} onChange={set(["show", "quickIconItems", "phone"])} />
@@ -221,19 +221,19 @@ function SettingsPage() {
               <Toggle label="WhatsApp icon" checked={draft.show.quickIconItems.whatsapp} onChange={set(["show", "quickIconItems", "whatsapp"])} />
             </div>)}
             <TextField label="Work email" type="email" value={draft.email} onChange={set(["email"])} error={err(["email"])} />
-            <Toggle label="Show email on card" checked={draft.show.email} onChange={set(["show", "email"])} />
+            <Toggle label="Show Email in contact links list" checked={draft.show.email} onChange={set(["show", "email"])} />
             <TextField label="Phone (international format)" type="tel" value={draft.phone} onChange={set(["phone"])} error={err(["phone"])} />
-            <Toggle label="Show phone on card" checked={draft.show.phone} onChange={set(["show", "phone"])} />
+            <Toggle label="Show Call in contact links list" checked={draft.show.phone} onChange={set(["show", "phone"])} />
             <Toggle label="Still include a hidden email or phone in the downloadable contact file" checked={draft.includeHiddenInContactFile} onChange={set(["includeHiddenInContactFile"])} />
             <label className="block text-sm">
               <span className="font-medium">Digital Card link (read-only, this card's own address)</span>
               <input readOnly value={url} className="mt-1 h-11 w-full rounded-xl border border-border bg-secondary px-3 text-sm text-muted-foreground" />
             </label>
-            <Toggle label="Show Digital Card on card" checked={draft.show.digitalCard} onChange={set(["show", "digitalCard"])} />
+            <Toggle label="Show Digital Card in contact links list" checked={draft.show.digitalCard} onChange={set(["show", "digitalCard"])} />
             <TextField label="LinkedIn URL (https://)" type="url" value={draft.linkedin.url} onChange={set(["linkedin", "url"])} error={err(["linkedin", "url"])} />
-            <Toggle label="Show LinkedIn" checked={draft.linkedin.enabled} onChange={set(["linkedin", "enabled"])} />
+            <Toggle label="Show LinkedIn in contact links list" checked={draft.show.linkedin} onChange={set(["show", "linkedin"])} />
             <TextField label="Eric's own WhatsApp number (digits with country code) or WhatsApp link (https://wa.me/...)" value={draft.whatsapp.number} onChange={set(["whatsapp", "number"])} error={err(["whatsapp", "number"])} />
-            <Toggle label="Show WhatsApp contact button" checked={draft.whatsapp.enabled} onChange={set(["whatsapp", "enabled"])} />
+            <Toggle label="Show WhatsApp in contact links list" checked={draft.show.whatsapp} onChange={set(["show", "whatsapp"])} />
             <p className="text-xs text-muted-foreground">This is Eric's personal contact button, separate from the WhatsApp product in the referral section.</p>
           </Section>
 
