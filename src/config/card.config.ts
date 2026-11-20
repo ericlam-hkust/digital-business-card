@@ -1,11 +1,15 @@
 /**
- * Eric Lam's digital business card — the single source of truth for
- * profile data, links, translations and feature toggles.
+ * Eric Lam's digital business card.
+ * - `defaultCard`: built-in content. It seeds the editor and is the fallback when
+ *   no valid published version can be loaded.
+ * - `cardConfig`: fixed settings (card address, images, file name).
+ * - `uiText`: fixed button and label text.
  */
 import headshot from "@/assets/eric-lam-headshot.jpg.asset.json";
 import logo from "@/assets/tonric-logo.png.asset.json";
+import type { CardData, Lang } from "@/lib/card-schema";
 
-export type Lang = "en" | "zh";
+export type { Lang };
 
 export const cardConfig = {
   /**
@@ -15,147 +19,114 @@ export const cardConfig = {
    */
   canonicalUrl: "",
   cardPath: "/eric",
-
   vcardFileName: "Eric-Lam-Tonric.vcf",
+  headshotUrl: headshot.url as string | null,
+  logoUrl: logo.url as string | null,
+  initials: "EL",
+};
 
-  name: { first: "Eric", last: "Lam", full: "Eric Lam", initials: "EL" },
+export const defaultCard: CardData = {
+  name: { first: "Eric", last: "Lam", full: "Eric Lam" },
   company: "Tonric Limited",
   companyZh: "拓域創科",
   email: "eric.lam@tonric.com",
   phone: "+852 6616 9018",
-  phoneE164: "+85266169018",
   website: "https://tonric.com",
-  websiteLabel: "tonric.com",
-
-  headshotUrl: headshot.url as string | null,
-  logoUrl: logo.url as string | null,
-
   linkedin: { enabled: true, url: "https://www.linkedin.com/in/ericlamhf/" },
   whatsapp: { enabled: false, number: "85266169018" },
-  showFooterTagline: true,
-
+  show: { email: true, phone: true, website: true },
+  includeHiddenInContactFile: false,
+  referrals: { visible: true, showNetwork: true, showIntro: true },
+  sharing: {
+    title: "Eric Lam | Tonric Limited",
+    description: "Eric Lam, Co-founder & CEO of Tonric Limited (拓域創科). Hong Kong AI solutions and SaaS. Save my contact in one tap.",
+  },
   text: {
     en: {
-      about: {
-        heading: "About Eric",
-        readBio: "Read bio",
-        hideBio: "Hide bio",
-        bio: [
-          "Eric Lam is Co-founder & CEO of Tonric Limited, where he helps Hong Kong SMEs identify practical uses for AI, automate manual workflows, and build software that fits the way they work.",
-          "Eric brings over a decade of experience in digital transformation, enterprise systems, and process innovation across global consumer brands. At PUMA Group, he leads digital solutions and process innovation for supply chain operations, including AI, automation, and enterprise systems initiatives. His earlier experience includes roles at Li & Fung, Pandora, Tiffany & Co., and Nike.",
-        ],
-        linkedinLink: "View LinkedIn profile",
-      },
-      ref: {
-        heading: "Referrals & Partnerships",
-        intro: "I’m looking for introductions to Hong Kong SME owners and operations leaders who want to cut manual work but aren’t sure where to start.",
-        askLabel: "Current referral ask",
-        ask: "My ideal introduction right now is to the owner or operations head of a Hong Kong trading, distribution, or logistics SME whose team manually re-enters orders, invoices, or shipment updates across email, Excel, and internal systems.",
-        cuesLabel: "Listen for these signals",
-        cues: [
-          "“We keep copying the same order details from emails and PDFs into Excel or our system.”",
-          "“Our team spends hours chasing approvals or pulling together weekly reports.”",
-          "“We want to try AI, but we don’t know which workflow to start with.”",
-        ],
-        cuesNote: "A good first conversation starts with one recurring workflow and the person responsible for it. No technical brief is needed.",
-        networkLabel: "Partner network",
-        network: [
-          { title: "Upstream — Referral partners", body: "People who already advise SME decision-makers and can spot a workflow problem early: accountants, outsourced finance advisers, SME consultants, and industry association contacts." },
-          { title: "Midstream — Solution partners", body: "Businesses with complementary offerings that could work with Tonric on a shared client opportunity: ERP or CRM implementers, managed IT providers, and process improvement consultants." },
-          { title: "Downstream — Delivery suppliers", body: "Vendors and specialists Tonric may directly pay for products or services needed to deliver a project: cloud and software vendors, integration or development contractors, and security testing providers." },
-        ],
-        introLabel: "Make an introduction",
-        template: "Hi [Name], I’d like to introduce you to Eric Lam, Co-founder & CEO of Tonric. You mentioned that your team spends time on [specific workflow]. Eric helps Hong Kong SMEs work out where AI or workflow automation could reduce manual work. Eric, [Name] leads [function] at [company]. I thought it would be useful for you both to connect.",
-        copyIntro: "Copy Introduction",
-        introCopied: "Introduction copied",
-        consent: "Check that both people are comfortable with the introduction before sharing their contact details.",
-        emailEric: "Email Eric",
-        emailSubject: "Tonric referral or partnership introduction",
-      },
       title: "Co-founder & CEO",
       location: "Hong Kong",
-      intro:
-        "I help Hong Kong SMEs put AI to work, from automating everyday workflows to building custom software.",
-      save: "Save Contact",
-      share: "Share Card",
-      showQr: "Show QR",
-      email: "Email",
-      call: "Call",
-      website: "Website",
-      linkedin: "LinkedIn",
-      whatsapp: "WhatsApp",
-      linkCopied: "Link copied",
-      copyLink: "Copy Link",
-      downloadQr: "Download QR",
-      close: "Close",
-      qrTitle: "Scan to open my card",
-      preview: "Preview — final link not set. Do not print.",
-      copyManual: "Copy this link:",
-      langToggle: "切換至繁體中文",
+      intro: "I help Hong Kong SMEs put AI to work, from automating everyday workflows to building custom software.",
       tagline: "Make the right solution. Ship the solution right.",
-      photoAlt: "Photo of Eric Lam",
+      bio:
+        "Eric Lam is Co-founder & CEO of Tonric Limited, where he helps Hong Kong SMEs identify practical uses for AI, automate manual workflows, and build software that fits the way they work.\n\nEric brings over a decade of experience in digital transformation, enterprise systems, and process innovation across global consumer brands. At PUMA Group, he leads digital solutions and process innovation for supply chain operations, including AI, automation, and enterprise systems initiatives. His earlier experience includes roles at Li & Fung, Pandora, Tiffany & Co., and Nike.",
+      ref: {
+        heading: "Referrals & Partnerships",
+        positioning:
+          "Tonric is building a 24/7 WhatsApp customer service agent and CRM for Hong Kong SMEs. The goal is to help teams answer common enquiries outside business hours and keep track of customer conversations and follow-ups in one place.",
+        ask: "Please introduce me to the owner or customer service lead of a Hong Kong SME that already serves customers on WhatsApp and struggles to reply after hours or keep track of follow-ups. I’d especially like to meet service businesses that handle frequent enquiries about bookings, pricing, or availability.",
+        cues: [
+          "“Customers message us after closing, but nobody replies until the next day.”",
+          "“We answer the same questions about prices, bookings, and availability all day.”",
+          "“Several staff handle WhatsApp, but we don’t know who replied or which enquiry still needs follow-up.”",
+        ],
+        network: [
+          { title: "Upstream — Referral partners", body: "SME advisers, business association contacts, and marketing agencies that can introduce owners or customer service leads whose teams handle frequent WhatsApp enquiries." },
+          { title: "Midstream — Solution partners", body: "CRM implementers, booking-system providers, and digital agencies that may collaborate with Tonric on a shared client opportunity." },
+          { title: "Downstream — Delivery suppliers", body: "Messaging platform providers, cloud vendors, and integration specialists whom Tonric may directly pay for products or services needed to deliver the solution." },
+        ],
+        template:
+          "Hi [Name], I’d like to introduce you to Eric Lam, Co-founder & CEO of Tonric. You mentioned that your team [describe the WhatsApp challenge]. Eric’s team is building a 24/7 WhatsApp customer service agent and CRM for SMEs. I thought it would be useful for you to compare notes on how you handle enquiries and follow-ups today. Eric, [Name] leads [function] at [company].",
+      },
     },
     zh: {
-      about: {
-        heading: "關於 Eric",
-        readBio: "閱讀簡介",
-        hideBio: "收起簡介",
-        bio: [
-          "Eric Lam 是拓域創科（Tonric Limited）的聯合創辦人兼行政總裁，專注協助香港中小企找出切合業務需要的 AI 應用場景、自動化人手流程，以及開發配合日常營運的軟件。",
-          "Eric 在國際消費品牌累積逾十年數碼轉型、企業系統及流程創新經驗。他現於 PUMA Group 領導供應鏈數碼方案及流程創新，負責推動 AI、自動化及企業系統項目，過往亦曾任職於利豐、Pandora、Tiffany & Co. 及 Nike。",
-        ],
-        linkedinLink: "查看 LinkedIn 個人檔案",
-      },
-      ref: {
-        heading: "商業引薦與合作",
-        intro: "我希望認識有意減少人手操作，但未確定從何入手的香港中小企東主及營運主管。",
-        askLabel: "目前最希望獲得的引薦",
-        ask: "現階段最希望獲引薦的是香港貿易、分銷或物流中小企的東主或營運主管，尤其是團隊需要在電郵、Excel 和內部系統之間重複輸入訂單、發票或付運資料的企業。",
-        cuesLabel: "留意這些說法",
-        cues: [
-          "「我哋成日要將電郵同 PDF 入面嘅訂單資料，再入一次 Excel 或公司系統。」",
-          "「我哋每星期都花好多時間追批核或者整合報表。」",
-          "「我哋想試用 AI，但唔知由邊個流程開始。」",
-        ],
-        cuesNote: "初步交流只需由一個重複出現的工作流程及其負責人入手，毋須預先準備技術規格。",
-        networkLabel: "合作夥伴網絡",
-        network: [
-          { title: "上游：引薦夥伴", body: "經常與中小企決策者交流、能及早發現流程痛點的夥伴，例如會計師、外判財務顧問、中小企顧問及商會或行業協會聯絡人。" },
-          { title: "中游：方案合作夥伴", body: "服務互補、可與拓域創科共同為客戶提供方案的夥伴，例如 ERP 或 CRM 實施商、託管 IT 服務商及流程改善顧問。" },
-          { title: "下游：交付供應商", body: "拓域創科為交付項目而直接採購產品或服務的供應商及專業團隊，例如雲端及軟件供應商、系統整合或開發承辦商，以及保安測試服務商。" },
-        ],
-        introLabel: "作出引薦",
-        template: "你好，[姓名]，想介紹拓域創科聯合創辦人兼行政總裁 Eric Lam 畀你認識。你之前提過團隊花唔少時間處理［具體流程］。Eric 主要協助香港中小企了解點樣用 AI 或流程自動化減少人手工作。Eric，［姓名］負責［公司］嘅［職能］，相信你哋可以交流一下。",
-        copyIntro: "複製引薦訊息",
-        introCopied: "已複製引薦訊息",
-        consent: "分享聯絡資料前，請先確認雙方都同意接受引薦。",
-        emailEric: "電郵聯絡 Eric",
-        emailSubject: "拓域創科｜商業引薦或合作",
-      },
       title: "聯合創辦人兼行政總裁",
       location: "香港",
       intro: "我協助香港中小企將 AI 應用於實際業務，從日常流程自動化到度身訂造軟件。",
-      save: "儲存聯絡人",
-      share: "分享名片",
-      showQr: "顯示二維碼",
-      email: "電郵",
-      call: "致電",
-      website: "網站",
-      linkedin: "LinkedIn",
-      whatsapp: "WhatsApp",
-      linkCopied: "已複製連結",
-      copyLink: "複製連結",
-      downloadQr: "下載二維碼",
-      close: "關閉",
-      qrTitle: "掃描開啟我的名片",
-      preview: "預覽 — 尚未設定正式連結，請勿印刷。",
-      copyManual: "請複製此連結：",
-      langToggle: "Switch to English",
       tagline: "Make the right solution. Ship the solution right.",
-      photoAlt: "Eric Lam 的照片",
+      bio:
+        "Eric Lam 是拓域創科（Tonric Limited）的聯合創辦人兼行政總裁，專注協助香港中小企找出切合業務需要的 AI 應用場景、自動化人手流程，以及開發配合日常營運的軟件。\n\nEric 在國際消費品牌累積逾十年數碼轉型、企業系統及流程創新經驗。他現於 PUMA Group 領導供應鏈數碼方案及流程創新，負責推動 AI、自動化及企業系統項目，過往亦曾任職於利豐、Pandora、Tiffany & Co. 及 Nike。",
+      ref: {
+        heading: "商業引薦與合作",
+        positioning:
+          "拓域創科正為香港中小企開發 24 小時 WhatsApp 客戶服務助理及客戶關係管理系統（CRM），目標是協助團隊在非辦公時間回覆常見查詢，並集中管理客戶對話及跟進事項。",
+        ask: "希望你介紹我認識已用 WhatsApp 服務客戶的香港中小企東主或客戶服務主管，尤其是難以及時回覆非辦公時間查詢，或容易遺漏跟進的團隊。我特別希望認識經常處理預約、收費或可預約時段查詢的服務型企業。",
+        cues: [
+          "「客人收舖後都會 WhatsApp 我哋，但要等到第二日先有人覆。」",
+          "「我哋日日都要答同樣嘅問題，例如收費、預約同有冇位。」",
+          "「幾個同事一齊睇 WhatsApp，但有時唔知邊個覆咗，或者邊個客仲未跟進。」",
+        ],
+        network: [
+          { title: "上游：引薦夥伴", body: "可引薦經常透過 WhatsApp 處理客戶查詢的企業東主或客服主管，例如中小企顧問、商會聯絡人及市場推廣公司。" },
+          { title: "中游：方案合作夥伴", body: "可與拓域創科共同為客戶提供方案的夥伴，例如 CRM 實施商、預約系統供應商及數碼服務公司。" },
+          { title: "下游：交付供應商", body: "拓域創科可能直接付費採購產品或服務的交付供應商，例如訊息平台服務商、雲端供應商及系統整合專家。" },
+        ],
+        template:
+          "你好，[姓名]，想介紹拓域創科聯合創辦人兼行政總裁 Eric Lam 畀你認識。你之前提過團隊［描述 WhatsApp 客服遇到的問題］。Eric 嘅團隊正為中小企開發 24 小時 WhatsApp 客服助理同 CRM，我諗你哋可以交流下現時點樣處理查詢同跟進。Eric，［姓名］負責［公司］嘅［職能］。",
+      },
     },
   },
+};
+
+export const uiText = {
+  en: {
+    save: "Save Contact", share: "Share Card", showQr: "Show QR",
+    email: "Email", call: "Call", website: "Website", linkedin: "LinkedIn", whatsapp: "WhatsApp",
+    linkCopied: "Link copied", copyLink: "Copy Link", downloadQr: "Download QR", close: "Close",
+    qrTitle: "Scan to open my card", preview: "Preview — final link not set. Do not print.",
+    copyManual: "Copy this link:", langToggle: "切換至繁體中文", photoAlt: "Photo of Eric Lam",
+    aboutHeading: "About Eric", readBio: "Read bio", hideBio: "Hide bio", linkedinLink: "View LinkedIn profile",
+    askLabel: "Current referral ask", cuesLabel: "Listen for these signals", networkLabel: "Partner network",
+    introLabel: "Make an introduction", copyIntro: "Copy Introduction", introCopied: "Introduction copied",
+    consent: "Check that both people are comfortable with the introduction before sharing their contact details.",
+    emailEric: "Email Eric", emailSubject: "Tonric referral or partnership introduction",
+    inDevelopment: "In development",
+  },
+  zh: {
+    save: "儲存聯絡人", share: "分享名片", showQr: "顯示二維碼",
+    email: "電郵", call: "致電", website: "網站", linkedin: "LinkedIn", whatsapp: "WhatsApp",
+    linkCopied: "已複製連結", copyLink: "複製連結", downloadQr: "下載二維碼", close: "關閉",
+    qrTitle: "掃描開啟我的名片", preview: "預覽 — 尚未設定正式連結，請勿印刷。",
+    copyManual: "請複製此連結：", langToggle: "Switch to English", photoAlt: "Eric Lam 的照片",
+    aboutHeading: "關於 Eric", readBio: "閱讀簡介", hideBio: "收起簡介", linkedinLink: "查看 LinkedIn 個人檔案",
+    askLabel: "目前最希望獲得的引薦", cuesLabel: "留意這些說法", networkLabel: "合作夥伴網絡",
+    introLabel: "作出引薦", copyIntro: "複製引薦訊息", introCopied: "已複製引薦訊息",
+    consent: "分享聯絡資料前，請先確認雙方都同意接受引薦。",
+    emailEric: "電郵聯絡 Eric", emailSubject: "拓域創科｜商業引薦或合作",
+    inDevelopment: "開發中",
+  },
 } as const;
+
+export type UiText = (typeof uiText)[Lang];
 
 export function getCardUrl(origin?: string): { url: string; isPreview: boolean } {
   if (cardConfig.canonicalUrl) return { url: cardConfig.canonicalUrl, isPreview: false };
@@ -163,7 +134,7 @@ export function getCardUrl(origin?: string): { url: string; isPreview: boolean }
 }
 
 /** Introduction text to copy; appends the card link only when a public canonical URL is set. */
-export function buildIntroduction(lang: Lang): string {
-  const tpl = cardConfig.text[lang].ref.template;
+export function buildIntroduction(card: CardData, lang: Lang): string {
+  const tpl = card.text[lang].ref.template;
   return cardConfig.canonicalUrl ? `${tpl}\n\n${cardConfig.canonicalUrl}` : tpl;
 }
