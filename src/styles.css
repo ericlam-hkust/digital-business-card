@@ -77,6 +77,8 @@
 }
 
 :root {
+  --cover-gradient: radial-gradient(120% 140% at 15% 0%, color-mix(in oklab, var(--primary) 45%, transparent), transparent 55%), radial-gradient(90% 120% at 100% 100%, color-mix(in oklab, var(--primary) 20%, transparent), transparent 60%), linear-gradient(135deg, var(--secondary), var(--background));
+  --cover-grid: linear-gradient(color-mix(in oklab, var(--foreground) 8%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in oklab, var(--foreground) 8%, transparent) 1px, transparent 1px);
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);

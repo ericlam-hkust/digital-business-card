@@ -96,20 +96,35 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
           </button>
         </header>
 
-        <section className="mt-3 rounded-3xl border border-border bg-card p-5 sm:p-6">
-          <div className="flex items-center gap-4">
-            {card.headshot || c.headshotUrl ? (
-              <img src={card.headshot || c.headshotUrl || ""} alt={t.photoAlt} className="size-20 shrink-0 rounded-full object-cover ring-2 ring-primary/70 ring-offset-4 ring-offset-card sm:size-24" />
-            ) : (
-              <div className="grid size-20 shrink-0 place-items-center rounded-full bg-secondary text-2xl font-semibold text-primary">{c.initials}</div>
+        <section className="mt-3 overflow-hidden rounded-3xl border border-border bg-card">
+          <div className="relative h-32 sm:h-36" style={{ background: "var(--cover-gradient)" }}>
+            <div className="absolute inset-0 opacity-40" style={{ backgroundImage: "var(--cover-grid)", backgroundSize: "22px 22px" }} aria-hidden />
+            {company.length > 0 && (
+              <nav aria-label={lang === "zh" ? "關注拓域創科" : "Follow Tonric"} className="absolute right-3 top-3 flex items-center gap-1.5">
+                <span className="mr-1 text-[0.7rem] font-medium text-foreground/80">{lang === "zh" ? "關注拓域創科" : "Follow Tonric"}</span>
+                {company.map((s) => (
+                  <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`Tonric ${s.label}`} title={`Tonric ${s.label}`}
+                    className="grid size-9 place-items-center rounded-full border border-foreground/15 bg-background/50 text-foreground backdrop-blur-md transition hover:border-primary hover:text-primary active:scale-95">
+                    <s.icon className="size-4" aria-hidden />
+                  </a>
+                ))}
+              </nav>
             )}
-            <div className="min-w-0">
-              <h1 className="text-[1.75rem] font-semibold leading-tight tracking-tight">{card.name.full}</h1>
-              <p className="mt-1 text-sm text-foreground/90">{content.title}</p>
-              <p className="text-sm text-muted-foreground">
-                {card.company} {card.companyZh && <span lang="zh-Hant" className="whitespace-nowrap">({card.companyZh})</span>}
-              </p>
-            </div>
+          </div>
+          <div className="px-5 pb-5 sm:px-6 sm:pb-6">
+          <div className="relative z-10 -mt-12 flex items-end gap-4">
+            {card.headshot || c.headshotUrl ? (
+              <img src={card.headshot || c.headshotUrl || ""} alt={t.photoAlt} className="size-24 shrink-0 rounded-full border-4 border-card object-cover ring-2 ring-primary/70" />
+            ) : (
+              <div className="grid size-24 shrink-0 place-items-center rounded-full border-4 border-card bg-secondary text-2xl font-semibold text-primary">{c.initials}</div>
+            )}
+          </div>
+          <div className="mt-3 min-w-0">
+            <h1 className="text-[1.75rem] font-semibold leading-tight tracking-tight">{card.name.full}</h1>
+            <p className="mt-1 text-sm text-foreground/90">{content.title}</p>
+            <p className="text-sm text-muted-foreground">
+              {card.company} {card.companyZh && <span lang="zh-Hant" className="whitespace-nowrap">({card.companyZh})</span>}
+            </p>
           </div>
           <p className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground">
             <MapPin className="size-3.5 text-primary" aria-hidden /> {content.location}
@@ -143,7 +158,7 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
             </button>
           </div>
           {manualUrl && <ManualCopy label={t.copyManual} url={manualUrl} />}
-
+          </div>
           </section>
 
         <section className="mt-4 rounded-3xl border border-border bg-card px-5 py-2 sm:px-6">
@@ -167,20 +182,6 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
             ))}
           </ul>
         </section>
-
-        {company.length > 0 && (
-          <section aria-labelledby="follow-tonric" className="mt-4 rounded-3xl border border-border bg-card p-5 sm:p-6">
-            <h2 id="follow-tonric" className="text-sm font-semibold">{lang === "zh" ? "關注拓域創科" : "Follow Tonric"}</h2>
-            <div className="mt-3 flex gap-2">
-              {company.map((s) => (
-                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`Tonric ${s.label}`}
-                  className="flex h-11 min-w-0 flex-1 items-center justify-center gap-2 rounded-full border border-border bg-secondary px-3 text-sm font-medium transition hover:border-primary/60 active:scale-95">
-                  <s.icon className="size-4 shrink-0 text-primary" aria-hidden /> <span className="truncate">{s.label}</span>
-                </a>
-              ))}
-            </div>
-          </section>
-        )}
 
         <ReferralSection card={card} lang={lang} ui={t} onCopied={flash} />
 
