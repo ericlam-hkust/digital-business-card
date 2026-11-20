@@ -137,21 +137,6 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
             <MapPin className="size-3.5 text-primary" aria-hidden /> {content.location}
           </p>
           <p className="mt-4 text-[0.95rem] leading-relaxed text-foreground/90">{content.intro}</p>
-          <button
-            onClick={() => (banner ? downloadVCard(card) : window.location.assign("/api/public/vcard"))}
-            className="mt-4 flex h-13 w-full items-center justify-center gap-2 rounded-2xl bg-primary text-base font-semibold text-primary-foreground transition hover:brightness-105 active:scale-[0.99]"
-          >
-            <Download className="size-5" aria-hidden /> {t.save}
-          </button>
-          <div className="mt-3 grid grid-cols-2 gap-3">
-            <button onClick={share} className="flex h-12 items-center justify-center gap-2 rounded-2xl border border-border bg-secondary text-sm font-medium hover:border-primary/50">
-              <Share2 className="size-4" aria-hidden /> {t.share}
-            </button>
-            <button ref={qrBtn} onClick={() => setQrOpen(true)} aria-haspopup="dialog" className="flex h-12 items-center justify-center gap-2 rounded-2xl border border-border bg-secondary text-sm font-medium hover:border-primary/50">
-              <QrCode className="size-4" aria-hidden /> {t.showQr}
-            </button>
-          </div>
-          {manualUrl && <ManualCopy label={t.copyManual} url={manualUrl} />}
           {rows.length > 0 && (
             <nav aria-label="Quick contact" className="mt-4 flex justify-center gap-3">
               {rows.map((r) => (
@@ -186,6 +171,21 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
           </ul>
             </div>
           )}
+          <button
+            onClick={() => (banner ? downloadVCard(card) : window.location.assign("/api/public/vcard"))}
+            className="mt-4 flex h-13 w-full items-center justify-center gap-2 rounded-2xl bg-primary text-base font-semibold text-primary-foreground transition hover:brightness-105 active:scale-[0.99]"
+          >
+            <Download className="size-5" aria-hidden /> {t.save}
+          </button>
+          <div className="mt-3 grid grid-cols-2 gap-3">
+            <button onClick={share} className="flex h-12 items-center justify-center gap-2 rounded-2xl border border-border bg-secondary text-sm font-medium hover:border-primary/50">
+              <Share2 className="size-4" aria-hidden /> {t.share}
+            </button>
+            <button ref={qrBtn} onClick={() => setQrOpen(true)} aria-haspopup="dialog" className="flex h-12 items-center justify-center gap-2 rounded-2xl border border-border bg-secondary text-sm font-medium hover:border-primary/50">
+              <QrCode className="size-4" aria-hidden /> {t.showQr}
+            </button>
+          </div>
+          {manualUrl && <ManualCopy label={t.copyManual} url={manualUrl} />}
           <AboutSection card={card} lang={lang} ui={t} embedded />
           </div>
           </section>
