@@ -53,7 +53,7 @@ export const cardDataSchema = z.object({
   website: httpsUrl,
   linkedin: z.object({ enabled: z.boolean(), url: optionalHttpsUrl }),
   whatsapp: z.object({ enabled: z.boolean(), number: z.union([z.literal(""), z.string().trim().regex(/^([1-9][0-9]{7,14}|https:\/\/(wa\.me|api\.whatsapp\.com|whatsapp\.com|www\.whatsapp\.com)\/\S+)$/, "Digits with country code (e.g. 85266169018) or a WhatsApp link (e.g. https://wa.me/message/...)")]) }),
-  show: z.object({ email: z.boolean(), phone: z.boolean(), website: z.boolean(), quickIcons: z.boolean().default(true) }),
+  show: z.object({ email: z.boolean(), phone: z.boolean(), website: z.boolean(), quickIcons: z.boolean().default(true), quickIconItems: z.object({ email: z.boolean().default(true), phone: z.boolean().default(true), card: z.boolean().default(true), linkedin: z.boolean().default(true), whatsapp: z.boolean().default(true) }).default({ email: true, phone: true, card: true, linkedin: true, whatsapp: true }) }),
   /** When true, a hidden email/phone is still put in the downloadable contact file. */
   includeHiddenInContactFile: z.boolean(),
   referrals: z.object({ visible: z.boolean(), showNetwork: z.boolean(), showIntro: z.boolean() }),

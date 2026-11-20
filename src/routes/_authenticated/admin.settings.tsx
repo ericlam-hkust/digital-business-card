@@ -213,6 +213,13 @@ function SettingsPage() {
 
           <Section title="Contact and links">
             <Toggle label="Show the contact icons under your name" checked={draft.show.quickIcons} onChange={set(["show", "quickIcons"])} />
+            {draft.show.quickIcons && (<div className="ml-4 space-y-2 border-l border-border pl-4">
+              <Toggle label="Email icon" checked={draft.show.quickIconItems.email} onChange={set(["show", "quickIconItems", "email"])} />
+              <Toggle label="Call icon" checked={draft.show.quickIconItems.phone} onChange={set(["show", "quickIconItems", "phone"])} />
+              <Toggle label="Digital Card icon" checked={draft.show.quickIconItems.card} onChange={set(["show", "quickIconItems", "card"])} />
+              <Toggle label="LinkedIn icon" checked={draft.show.quickIconItems.linkedin} onChange={set(["show", "quickIconItems", "linkedin"])} />
+              <Toggle label="WhatsApp icon" checked={draft.show.quickIconItems.whatsapp} onChange={set(["show", "quickIconItems", "whatsapp"])} />
+            </div>)}
             <TextField label="Work email" type="email" value={draft.email} onChange={set(["email"])} error={err(["email"])} />
             <Toggle label="Show email on card" checked={draft.show.email} onChange={set(["show", "email"])} />
             <TextField label="Phone (international format)" type="tel" value={draft.phone} onChange={set(["phone"])} error={err(["phone"])} />

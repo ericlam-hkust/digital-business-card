@@ -65,12 +65,13 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
   };
 
   const rows = [
-    { show: card.show.email && !!card.email, href: `mailto:${card.email}`, icon: Mail, label: t.email, value: card.email },
-    { show: card.show.phone && !!card.phone, href: `tel:${phoneE164}`, icon: Phone, label: t.call, value: card.phone },
-    { show: !!url, href: url, icon: IdCard, label: t.digitalCard, value: url.replace(/^https?:\/\//, ""), ext: false },
-    { show: card.linkedin.enabled && !!card.linkedin.url, href: card.linkedin.url, icon: Linkedin, label: t.linkedin, value: card.linkedin.url.replace(/^https?:\/\/(www\.)?/, ""), ext: true },
-    { show: card.whatsapp.enabled && !!card.whatsapp.number, href: whatsappHref(card.whatsapp.number), icon: WhatsAppIcon, label: t.whatsapp, value: whatsappLabel(card.whatsapp.number), ext: true },
+    { show: card.show.email && !!card.email, href: `mailto:${card.email}`, icon: Mail, key: "email" as const, label: t.email, value: card.email },
+    { show: card.show.phone && !!card.phone, href: `tel:${phoneE164}`, icon: Phone, key: "phone" as const, label: t.call, value: card.phone },
+    { show: !!url, href: url, icon: IdCard, key: "card" as const, label: t.digitalCard, value: url.replace(/^https?:\/\//, ""), ext: false },
+    { show: card.linkedin.enabled && !!card.linkedin.url, href: card.linkedin.url, icon: Linkedin, key: "linkedin" as const, label: t.linkedin, value: card.linkedin.url.replace(/^https?:\/\/(www\.)?/, ""), ext: true },
+    { show: card.whatsapp.enabled && !!card.whatsapp.number, href: whatsappHref(card.whatsapp.number), icon: WhatsAppIcon, key: "whatsapp" as const, label: t.whatsapp, value: whatsappLabel(card.whatsapp.number), ext: true },
   ].filter((r) => r.show);
+  const quickRows = rows.filter((r) => card.show.quickIconItems?.[r.key] !== false);
   const socials = card.socials;
   const strip = (u: string) => u.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
   const company = [
@@ -137,9 +138,9 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
             <MapPin className="size-3.5 text-primary" aria-hidden /> {content.location}
           </p>
           <p className="mt-4 text-[0.95rem] leading-relaxed text-foreground/90">{content.intro}</p>
-          {rows.length > 0 && card.show.quickIcons && (
+          {quickRows.length > 0 && card.show.quickIcons && (
             <nav aria-label="Quick contact" className="mt-4 flex justify-center gap-3">
-              {rows.map((r) => (
+              {quickRows.map((r) => (
                 <a key={r.label} href={r.href} {...(r.ext ? { target: "_blank", rel: "noopener noreferrer" } : {})} aria-label={r.label} title={r.label}
                   className="grid size-12 place-items-center rounded-full border border-border bg-secondary text-primary transition hover:border-primary/60 active:scale-95">
                   <r.icon className="size-5" aria-hidden />
