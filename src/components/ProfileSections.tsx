@@ -35,11 +35,6 @@ export function AboutSection({ card, lang, ui, embedded }: { card: CardData; lan
         {bio.map((p) => (
           <p key={p} className="mt-2 text-sm leading-relaxed text-foreground/90">{p}</p>
         ))}
-        {card.linkedin.enabled && card.linkedin.url && (
-          <a href={card.linkedin.url} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-primary underline-offset-4 hover:underline">
-            {ui.linkedinLink} <ExternalLink className="size-3.5" aria-hidden />
-          </a>
-        )}
       </div>
     </section>
   );

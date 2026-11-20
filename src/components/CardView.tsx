@@ -66,7 +66,7 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
     { show: card.show.email && !!card.email, href: `mailto:${card.email}`, icon: Mail, label: t.email, value: card.email },
     { show: card.show.phone && !!card.phone, href: `tel:${phoneE164}`, icon: Phone, label: t.call, value: card.phone },
     { show: card.show.website && !!card.website, href: card.website, icon: Globe, label: t.website, value: websiteLabel(card.website), ext: true },
-    { show: card.linkedin.enabled && !!card.linkedin.url, href: card.linkedin.url, icon: Linkedin, label: t.linkedin, value: "LinkedIn", ext: true },
+    { show: card.linkedin.enabled && !!card.linkedin.url, href: card.linkedin.url, icon: Linkedin, label: t.linkedin, value: card.linkedin.url.replace(/^https?:\/\/(www\.)?/, ""), ext: true },
     { show: card.whatsapp.enabled && !!card.whatsapp.number, href: `https://wa.me/${card.whatsapp.number}`, icon: MessageCircle, label: t.whatsapp, value: "+" + card.whatsapp.number, ext: true },
   ].filter((r) => r.show);
 
