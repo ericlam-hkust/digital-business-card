@@ -215,6 +215,14 @@ function SettingsPage() {
             <p className="text-xs text-muted-foreground">This is Eric's personal contact button, separate from the WhatsApp product in the referral section.</p>
           </Section>
 
+          <Section title="Tonric company socials">
+            <TextField label="Tonric Facebook page (https://)" type="url" value={draft.socials.facebook.url} onChange={set(["socials", "facebook", "url"])} error={err(["socials", "facebook", "url"])} />
+            <Toggle label="Show Facebook" checked={draft.socials.facebook.enabled} onChange={set(["socials", "facebook", "enabled"])} />
+            <TextField label="Tonric Instagram page (https://)" type="url" value={draft.socials.instagram.url} onChange={set(["socials", "instagram", "url"])} error={err(["socials", "instagram", "url"])} />
+            <Toggle label="Show Instagram" checked={draft.socials.instagram.enabled} onChange={set(["socials", "instagram", "enabled"])} />
+            <p className="text-xs text-muted-foreground">Shown with the Tonric website under "Follow Tonric" on the card.</p>
+          </Section>
+
           <Section title="Referrals">
             <Toggle label="Show the referral section" checked={draft.referrals.visible} onChange={set(["referrals", "visible"])} />
             <Toggle label="Show the partner network panel" checked={draft.referrals.showNetwork} onChange={set(["referrals", "showNetwork"])} />

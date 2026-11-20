@@ -57,6 +57,13 @@ export const cardDataSchema = z.object({
   /** When true, a hidden email/phone is still put in the downloadable contact file. */
   includeHiddenInContactFile: z.boolean(),
   referrals: z.object({ visible: z.boolean(), showNetwork: z.boolean(), showIntro: z.boolean() }),
+  /** Tonric company social pages shown under "Follow Tonric"; older saved versions get empty, hidden links. */
+  socials: z
+    .object({
+      facebook: z.object({ enabled: z.boolean(), url: optionalHttpsUrl }),
+      instagram: z.object({ enabled: z.boolean(), url: optionalHttpsUrl }),
+    })
+    .default({ facebook: { enabled: false, url: "" }, instagram: { enabled: false, url: "" } }),
   /** Past employers shown as logos under About Eric; older saved versions get the defaults. */
   brands: z
     .object({ visible: z.boolean(), names: z.array(z.string().trim().max(60)).max(12) })
@@ -68,6 +75,8 @@ export const cardDataSchema = z.object({
 }).superRefine((d, ctx) => {
   if (d.linkedin.enabled && !d.linkedin.url) ctx.addIssue({ code: "custom", path: ["linkedin", "url"], message: "Add the LinkedIn link or turn it off" });
   if (d.whatsapp.enabled && !d.whatsapp.number) ctx.addIssue({ code: "custom", path: ["whatsapp", "number"], message: "Add the WhatsApp number or turn it off" });
+  if (d.socials.facebook.enabled && !d.socials.facebook.url) ctx.addIssue({ code: "custom", path: ["socials", "facebook", "url"], message: "Add the Facebook link or turn it off" });
+  if (d.socials.instagram.enabled && !d.socials.instagram.url) ctx.addIssue({ code: "custom", path: ["socials", "instagram", "url"], message: "Add the Instagram link or turn it off" });
 });
 
 export type CardData = z.infer<typeof cardDataSchema>;

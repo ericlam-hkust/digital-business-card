@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import QRCode from "qrcode";
-import { Download, Globe, Linkedin, Mail, MapPin, MessageCircle, Phone, QrCode, Share2, Copy, X, ChevronRight } from "lucide-react";
+import { Download, Facebook, Instagram, Globe, Linkedin, Mail, MapPin, MessageCircle, Phone, QrCode, Share2, Copy, X, ChevronRight } from "lucide-react";
 import { cardConfig, getCardUrl, uiText, type Lang, type UiText } from "@/config/card.config";
 import { phoneDigits, websiteLabel, type CardData } from "@/lib/card-schema";
 import { downloadVCard } from "@/lib/vcard";
@@ -68,6 +68,12 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
     { show: card.show.website && !!card.website, href: card.website, icon: Globe, label: t.website, value: websiteLabel(card.website), ext: true },
     { show: card.linkedin.enabled && !!card.linkedin.url, href: card.linkedin.url, icon: Linkedin, label: t.linkedin, value: card.linkedin.url.replace(/^https?:\/\/(www\.)?/, ""), ext: true },
     { show: card.whatsapp.enabled && !!card.whatsapp.number, href: `https://wa.me/${card.whatsapp.number}`, icon: MessageCircle, label: t.whatsapp, value: "+" + card.whatsapp.number, ext: true },
+  ].filter((r) => r.show);
+  const socials = card.socials ?? { facebook: { enabled: false, url: "" }, instagram: { enabled: false, url: "" } };
+  const company = [
+    { show: card.show.website && !!card.website, href: card.website, icon: Globe, label: t.website },
+    { show: socials.facebook.enabled && !!socials.facebook.url, href: socials.facebook.url, icon: Facebook, label: "Facebook" },
+    { show: socials.instagram.enabled && !!socials.instagram.url, href: socials.instagram.url, icon: Instagram, label: "Instagram" },
   ].filter((r) => r.show);
 
   return (
@@ -161,6 +167,20 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
             ))}
           </ul>
         </section>
+
+        {company.length > 0 && (
+          <section aria-labelledby="follow-tonric" className="mt-4 rounded-3xl border border-border bg-card p-5 sm:p-6">
+            <h2 id="follow-tonric" className="text-sm font-semibold">{lang === "zh" ? "關注拓域創科" : "Follow Tonric"}</h2>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {company.map((s) => (
+                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`Tonric ${s.label}`}
+                  className="flex h-11 items-center gap-2 rounded-full border border-border bg-secondary px-4 text-sm font-medium transition hover:border-primary/60 active:scale-95">
+                  <s.icon className="size-4 text-primary" aria-hidden /> {s.label}
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
 
         <ReferralSection card={card} lang={lang} ui={t} onCopied={flash} />
 
