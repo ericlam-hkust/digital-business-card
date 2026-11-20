@@ -222,6 +222,8 @@ function SettingsPage() {
             <Toggle label="Show Facebook" checked={draft.socials.facebook.enabled} onChange={set(["socials", "facebook", "enabled"])} />
             <TextField label="Tonric Instagram page (https://)" type="url" value={draft.socials.instagram.url} onChange={set(["socials", "instagram", "url"])} error={err(["socials", "instagram", "url"])} />
             <Toggle label="Show Instagram" checked={draft.socials.instagram.enabled} onChange={set(["socials", "instagram", "enabled"])} />
+            <TextField label="Tonric LinkedIn company page (https://)" type="url" value={draft.socials.linkedin.url} onChange={set(["socials", "linkedin", "url"])} error={err(["socials", "linkedin", "url"])} />
+            <Toggle label="Show LinkedIn page" checked={draft.socials.linkedin.enabled} onChange={set(["socials", "linkedin", "enabled"])} />
             <p className="text-xs text-muted-foreground">Shown with the Tonric website under "Follow Tonric" on the card.</p>
           </Section>
 

@@ -62,10 +62,12 @@ export const cardDataSchema = z.object({
     .object({
       facebook: z.object({ enabled: z.boolean(), url: optionalHttpsUrl }),
       instagram: z.object({ enabled: z.boolean(), url: optionalHttpsUrl }),
+      linkedin: z.object({ enabled: z.boolean(), url: optionalHttpsUrl }).default({ enabled: false, url: "" }),
     })
     .default({
       facebook: { enabled: true, url: "https://www.facebook.com/tonric" },
       instagram: { enabled: true, url: "https://www.instagram.com/tonric.ai/" },
+      linkedin: { enabled: false, url: "" },
     }),
   /** Past employers shown as logos under About Eric; older saved versions get the defaults. */
   brands: z
@@ -82,6 +84,7 @@ export const cardDataSchema = z.object({
   if (d.whatsapp.enabled && !d.whatsapp.number) ctx.addIssue({ code: "custom", path: ["whatsapp", "number"], message: "Add the WhatsApp number or turn it off" });
   if (d.socials.facebook.enabled && !d.socials.facebook.url) ctx.addIssue({ code: "custom", path: ["socials", "facebook", "url"], message: "Add the Facebook link or turn it off" });
   if (d.socials.instagram.enabled && !d.socials.instagram.url) ctx.addIssue({ code: "custom", path: ["socials", "instagram", "url"], message: "Add the Instagram link or turn it off" });
+  if (d.socials.linkedin.enabled && !d.socials.linkedin.url) ctx.addIssue({ code: "custom", path: ["socials", "linkedin", "url"], message: "Add the LinkedIn page link or turn it off" });
 });
 
 export type CardData = z.infer<typeof cardDataSchema>;

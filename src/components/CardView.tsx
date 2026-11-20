@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import QRCode from "qrcode";
-import { Download, Facebook, Instagram, Globe, Linkedin, Mail, MapPin, MessageCircle, Phone, QrCode, Share2, Copy, X, ChevronRight } from "lucide-react";
+import { Download, Facebook, Instagram, Globe, IdCard, Linkedin, Mail, MapPin, MessageCircle, Phone, QrCode, Share2, Copy, X, ChevronRight } from "lucide-react";
 import { cardConfig, getCardUrl, uiText, type Lang, type UiText } from "@/config/card.config";
 import { phoneDigits, websiteLabel, type CardData } from "@/lib/card-schema";
 import { downloadVCard } from "@/lib/vcard";
@@ -65,16 +65,19 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
   const rows = [
     { show: card.show.email && !!card.email, href: `mailto:${card.email}`, icon: Mail, label: t.email, value: card.email },
     { show: card.show.phone && !!card.phone, href: `tel:${phoneE164}`, icon: Phone, label: t.call, value: card.phone },
-    { show: card.show.website && !!card.website, href: card.website, icon: Globe, label: t.website, value: websiteLabel(card.website), ext: true },
+    { show: !!url, href: url, icon: IdCard, label: t.digitalCard, value: url.replace(/^https?:\/\//, ""), ext: false },
     { show: card.linkedin.enabled && !!card.linkedin.url, href: card.linkedin.url, icon: Linkedin, label: t.linkedin, value: card.linkedin.url.replace(/^https?:\/\/(www\.)?/, ""), ext: true },
     { show: card.whatsapp.enabled && !!card.whatsapp.number, href: `https://wa.me/${card.whatsapp.number}`, icon: MessageCircle, label: t.whatsapp, value: "+" + card.whatsapp.number, ext: true },
   ].filter((r) => r.show);
-  const socials = card.socials ?? { facebook: { enabled: false, url: "" }, instagram: { enabled: false, url: "" } };
+  const socials = { facebook: { enabled: false, url: "" }, instagram: { enabled: false, url: "" }, linkedin: { enabled: false, url: "" }, ...card.socials };
+  const strip = (u: string) => u.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
   const company = [
     { show: card.show.website && !!card.website, href: card.website, icon: Globe, label: t.website },
     { show: socials.facebook.enabled && !!socials.facebook.url, href: socials.facebook.url, icon: Facebook, label: "Facebook" },
     { show: socials.instagram.enabled && !!socials.instagram.url, href: socials.instagram.url, icon: Instagram, label: "Instagram" },
+    { show: socials.linkedin.enabled && !!socials.linkedin.url, href: socials.linkedin.url, icon: Linkedin, label: "LinkedIn" },
   ].filter((r) => r.show);
+  const fans = company.map((r) => ({ ...r, label: r.icon === Globe ? t.companyWebsite : r.label, value: strip(r.href) }));
 
   return (
     <div className="min-h-dvh bg-background px-4 py-4 sm:py-10">
@@ -184,6 +187,26 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
             ))}
           </ul>
         </section>
+
+        {fans.length > 0 && (
+          <section aria-labelledby="fans-h" className="mt-4 rounded-3xl border border-border bg-card px-5 py-4 sm:px-6">
+            <h2 id="fans-h" className="text-sm font-semibold">{t.fansHeading}</h2>
+            <ul className="mt-2 divide-y divide-border">
+              {fans.map((r) => (
+                <li key={r.label}>
+                  <a href={r.href} target="_blank" rel="noopener noreferrer" aria-label={`${r.label}: ${r.value}`} className="flex min-h-14 items-center gap-3 rounded-lg px-1 py-2.5 hover:bg-secondary/60">
+                    <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-secondary text-primary"><r.icon className="size-4" aria-hidden /></span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-xs text-muted-foreground">{r.label}</span>
+                      <span className="block truncate text-sm">{r.value}</span>
+                    </span>
+                    <ChevronRight className="size-4 text-muted-foreground" aria-hidden />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <ReferralSection card={card} lang={lang} ui={t} onCopied={flash} />
 

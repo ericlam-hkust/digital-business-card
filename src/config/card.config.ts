@@ -44,6 +44,7 @@ export const defaultCard: CardData = {
   socials: {
     facebook: { enabled: true, url: "https://www.facebook.com/tonric" },
     instagram: { enabled: true, url: "https://www.instagram.com/tonric.ai/" },
+    linkedin: { enabled: false, url: "" },
   },
   brands: { visible: true, names: ["PUMA", "Li & Fung", "Pandora", "Tiffany & Co.", "Nike"] },
   sharing: {
@@ -109,7 +110,7 @@ export const defaultCard: CardData = {
 export const uiText = {
   en: {
     save: "Save Contact", share: "Share Card", showQr: "Show QR",
-    email: "Email", call: "Call", website: "Website", linkedin: "LinkedIn", whatsapp: "WhatsApp",
+    email: "Email", call: "Call", website: "Website", digitalCard: "Digital Card", fansHeading: "Tonric Fans Pages", companyWebsite: "Company website", linkedin: "LinkedIn", whatsapp: "WhatsApp",
     linkCopied: "Link copied", copyLink: "Copy Link", downloadQr: "Download QR", close: "Close",
     qrTitle: "Scan to open my card", preview: "Preview — final link not set. Do not print.",
     copyManual: "Copy this link:", langToggle: "切換至繁體中文", photoAlt: "Photo of Eric Lam",
@@ -121,7 +122,7 @@ export const uiText = {
   },
   zh: {
     save: "儲存聯絡人", share: "分享名片", showQr: "顯示二維碼",
-    email: "電郵", call: "致電", website: "網站", linkedin: "LinkedIn", whatsapp: "WhatsApp",
+    email: "電郵", call: "致電", website: "網站", digitalCard: "電子名片", fansHeading: "拓域創科官方專頁", companyWebsite: "公司網站", linkedin: "LinkedIn", whatsapp: "WhatsApp",
     linkCopied: "已複製連結", copyLink: "複製連結", downloadQr: "下載二維碼", close: "關閉",
     qrTitle: "掃描開啟我的名片", preview: "預覽 — 尚未設定正式連結，請勿印刷。",
     copyManual: "請複製此連結：", langToggle: "Switch to English", photoAlt: "Eric Lam 的照片",
