@@ -4,6 +4,7 @@ import QRCode from "qrcode";
 import { Download, Globe, Linkedin, Mail, MapPin, MessageCircle, Phone, QrCode, Share2, Copy, X, ChevronRight } from "lucide-react";
 import { cardConfig, getCardUrl, type Lang } from "@/config/card.config";
 import { downloadVCard } from "@/lib/vcard";
+import { AboutSection, ReferralSection } from "@/components/ProfileSections";
 
 const DESC = "Eric Lam, Co-founder & CEO of Tonric Limited (拓域創科). Hong Kong AI solutions and SaaS. Save my contact in one tap.";
 
@@ -157,6 +158,9 @@ function CardPage() {
             ))}
           </ul>
         </section>
+
+        <AboutSection t={t} />
+        <ReferralSection t={t} lang={lang} onCopied={flash} />
 
         {c.showFooterTagline && <p className="mt-6 text-center text-xs text-muted-foreground">{t.tagline}</p>}
       </main>

@@ -20,3 +20,15 @@ describe("vCard", () => {
     expect(escapeVCard("a,b;c\\d\ne")).toBe("a\\,b\\;c\\\\d\\ne");
   });
 });
+
+import { buildIntroduction, cardConfig as cfg } from "@/config/card.config";
+describe("referral settings", () => {
+  it("LinkedIn uses the exact supplied URL", () => {
+    expect(cfg.linkedin.url).toBe("https://www.linkedin.com/in/ericlamhf/");
+  });
+  it("introduction copies in the chosen language without preview links", () => {
+    expect(buildIntroduction("en").startsWith("Hi [Name]")).toBe(true);
+    expect(buildIntroduction("zh").startsWith("你好，[姓名]")).toBe(true);
+    expect(buildIntroduction("en")).not.toContain("lovable");
+  });
+});
