@@ -18,3 +18,24 @@ describe("Tonric company socials", () => {
     expect(cardDataSchema.safeParse({ ...defaultCard, socials: { ...defaultCard.socials, instagram: { enabled: true, url: "http://instagram.com/x" } } }).success).toBe(false);
   });
 });
+
+import { cardDataSchema as _cs, whatsappHref, whatsappLabel } from "@/lib/card-schema";
+describe("whatsapp accepts number or link", () => {
+  it("link used as-is", () => {
+    expect(whatsappHref("https://wa.me/message/WG4UEQM4NNOQN1")).toBe("https://wa.me/message/WG4UEQM4NNOQN1");
+    expect(whatsappLabel("https://wa.me/message/WG4UEQM4NNOQN1")).toBe("wa.me/message/WG4UEQM4NNOQN1");
+  });
+  it("number becomes wa.me link", () => {
+    expect(whatsappHref("85266169018")).toBe("https://wa.me/85266169018");
+  });
+});
+describe("whatsapp schema", () => {
+  it("accepts the wa.me link", () => {
+    const d = { ...defaultCard, whatsapp: { enabled: true, number: "https://wa.me/message/WG4UEQM4NNOQN1" } };
+    expect(_cs.safeParse(d).success).toBe(true);
+  });
+  it("rejects a non-WhatsApp link", () => {
+    const d = { ...defaultCard, whatsapp: { enabled: true, number: "https://evil.com/x" } };
+    expect(_cs.safeParse(d).success).toBe(false);
+  });
+});

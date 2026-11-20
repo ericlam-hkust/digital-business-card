@@ -212,7 +212,7 @@ function SettingsPage() {
             <Toggle label="Show website on card" checked={draft.show.website} onChange={set(["show", "website"])} />
             <TextField label="LinkedIn URL (https://)" type="url" value={draft.linkedin.url} onChange={set(["linkedin", "url"])} error={err(["linkedin", "url"])} />
             <Toggle label="Show LinkedIn" checked={draft.linkedin.enabled} onChange={set(["linkedin", "enabled"])} />
-            <TextField label="Eric's own WhatsApp number (digits with country code)" value={draft.whatsapp.number} onChange={set(["whatsapp", "number"])} error={err(["whatsapp", "number"])} />
+            <TextField label="Eric's own WhatsApp number (digits with country code) or WhatsApp link (https://wa.me/...)" value={draft.whatsapp.number} onChange={set(["whatsapp", "number"])} error={err(["whatsapp", "number"])} />
             <Toggle label="Show WhatsApp contact button" checked={draft.whatsapp.enabled} onChange={set(["whatsapp", "enabled"])} />
             <p className="text-xs text-muted-foreground">This is Eric's personal contact button, separate from the WhatsApp product in the referral section.</p>
           </Section>

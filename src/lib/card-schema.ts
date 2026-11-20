@@ -52,7 +52,7 @@ export const cardDataSchema = z.object({
   phone: phoneSchema,
   website: httpsUrl,
   linkedin: z.object({ enabled: z.boolean(), url: optionalHttpsUrl }),
-  whatsapp: z.object({ enabled: z.boolean(), number: z.union([z.literal(""), z.string().regex(/^[1-9][0-9]{7,14}$/, "Digits only, with country code, e.g. 85266169018")]) }),
+  whatsapp: z.object({ enabled: z.boolean(), number: z.union([z.literal(""), z.string().trim().regex(/^([1-9][0-9]{7,14}|https:\/\/(wa\.me|api\.whatsapp\.com|whatsapp\.com|www\.whatsapp\.com)\/\S+)$/, "Digits with country code (e.g. 85266169018) or a WhatsApp link (e.g. https://wa.me/message/...)")]) }),
   show: z.object({ email: z.boolean(), phone: z.boolean(), website: z.boolean() }),
   /** When true, a hidden email/phone is still put in the downloadable contact file. */
   includeHiddenInContactFile: z.boolean(),
@@ -128,4 +128,12 @@ export function missingTranslations(d: CardData): string[] {
     if (d.referrals.showIntro) cmp("Introduction message", en.ref.template, zh.ref.template);
   }
   return out;
+}
+
+/** WhatsApp setting may be a phone number (digits) or a full wa.me / whatsapp.com link. */
+export function whatsappHref(v: string): string {
+  return /^https:\/\//.test(v) ? v : `https://wa.me/${v}`;
+}
+export function whatsappLabel(v: string): string {
+  return /^https:\/\//.test(v) ? v.replace(/^https:\/\/(www\.)?/, "").replace(/\/$/, "") : "+" + v;
 }

@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import QRCode from "qrcode";
-import { Download, Facebook, Instagram, Globe, IdCard, Linkedin, Mail, MapPin, MessageCircle, Phone, QrCode, Share2, Copy, X, ChevronRight } from "lucide-react";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
+import { whatsappHref, whatsappLabel } from "@/lib/card-schema";
+import { Download, Facebook, Instagram, Globe, IdCard, Linkedin, Mail, MapPin, Phone, QrCode, Share2, Copy, X, ChevronRight } from "lucide-react";
 import { cardConfig, getCardUrl, uiText, type Lang, type UiText } from "@/config/card.config";
 import { phoneDigits, websiteLabel, type CardData } from "@/lib/card-schema";
 import { downloadVCard } from "@/lib/vcard";
@@ -67,7 +69,7 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
     { show: card.show.phone && !!card.phone, href: `tel:${phoneE164}`, icon: Phone, label: t.call, value: card.phone },
     { show: !!url, href: url, icon: IdCard, label: t.digitalCard, value: url.replace(/^https?:\/\//, ""), ext: false },
     { show: card.linkedin.enabled && !!card.linkedin.url, href: card.linkedin.url, icon: Linkedin, label: t.linkedin, value: card.linkedin.url.replace(/^https?:\/\/(www\.)?/, ""), ext: true },
-    { show: card.whatsapp.enabled && !!card.whatsapp.number, href: `https://wa.me/${card.whatsapp.number}`, icon: MessageCircle, label: t.whatsapp, value: "+" + card.whatsapp.number, ext: true },
+    { show: card.whatsapp.enabled && !!card.whatsapp.number, href: whatsappHref(card.whatsapp.number), icon: WhatsAppIcon, label: t.whatsapp, value: whatsappLabel(card.whatsapp.number), ext: true },
   ].filter((r) => r.show);
   const socials = card.socials;
   const strip = (u: string) => u.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
