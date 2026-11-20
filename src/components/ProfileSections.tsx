@@ -2,7 +2,7 @@ import { useId, useState, type ReactNode } from "react";
 import { ChevronDown, Copy, ExternalLink, Mail } from "lucide-react";
 import { buildIntroduction, type Lang, type UiText } from "@/config/card.config";
 import type { CardData } from "@/lib/card-schema";
-import { findBrand } from "@/lib/brands";
+import { findBrand, onlineLogoUrl } from "@/lib/brands";
 
 function Panel({ label, openLabel, children }: { label: string; openLabel?: string; children: ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -56,7 +56,7 @@ function BrandLogos({ card, ui }: { card: CardData; ui: UiText }) {
               {b ? (
                 <img src={b.logo} alt={b.name} loading="lazy" className="max-h-7 max-w-full object-contain" />
               ) : (
-                <span className="text-center text-xs font-semibold leading-tight text-brand-tile-foreground">{n}</span>
+                <OnlineLogo name={n} />
               )}
             </li>
           );
@@ -64,6 +64,13 @@ function BrandLogos({ card, ui }: { card: CardData; ui: UiText }) {
       </ul>
     </div>
   );
+}
+
+function OnlineLogo({ name }: { name: string }) {
+  const url = onlineLogoUrl(name);
+  const [failed, setFailed] = useState(false);
+  if (!url || failed) return <span className="text-center text-xs font-semibold leading-tight text-brand-tile-foreground">{name}</span>;
+  return <img src={url} alt={name} loading="lazy" onError={() => setFailed(true)} className="max-h-7 max-w-full object-contain" />;
 }
 
 export function ReferralSection({ card, lang, ui, onCopied }: { card: CardData; lang: Lang; ui: UiText; onCopied: (msg: string) => void }) {

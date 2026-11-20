@@ -199,7 +199,7 @@ function SettingsPage() {
             {Bi({ label: "Full bio (leave a blank line between paragraphs)", field: (l) => ["text", l, "bio"], area: true })}
             <TextField label="Brands worked with (one company per line)" area value={draft.brands.names.join("\n")} onChange={(v) => set(["brands", "names"])(String(v).split("\n").slice(0, 12))} error={err(["brands", "names"])} />
             <p className="text-xs text-muted-foreground">
-              {draft.brands.names.filter((n) => n.trim()).map((n) => `${n.trim()}: ${findBrand(n) ? "logo found" : "shown as text"}`).join(" · ") || "No brands listed."}
+              {draft.brands.names.filter((n) => n.trim()).map((n) => `${n.trim()}: ${findBrand(n) ? "logo found" : "looked up online (text if not found)"}`).join(" · ") || "No brands listed."}
               {" "}Logos available: PUMA, Li & Fung, Pandora, Tiffany & Co., Nike.
             </p>
             <Toggle label="Show brand logos under About Eric" checked={draft.brands.visible} onChange={set(["brands", "visible"])} />

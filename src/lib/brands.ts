@@ -17,3 +17,14 @@ export function findBrand(name: string): Brand | null {
   if (!n) return null;
   return brandCatalog.find((b) => b.aliases.some((a) => norm(a) === n)) ?? null;
 }
+
+/** Simple Icons slug for a company name (free public logo library, no key needed). */
+export function simpleIconSlug(name: string): string {
+  return name.toLowerCase().replace(/&/g, "and").replace(/\+/g, "plus").replace(/\./g, "dot").replace(/[^a-z0-9]/g, "");
+}
+
+/** Online logo address tried when a name is not in the local catalogue. */
+export function onlineLogoUrl(name: string): string | null {
+  const slug = simpleIconSlug(name.trim());
+  return slug ? `https://cdn.simpleicons.org/${slug}/ffffff` : null;
+}
