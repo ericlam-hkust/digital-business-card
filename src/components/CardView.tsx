@@ -171,11 +171,11 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
         {company.length > 0 && (
           <section aria-labelledby="follow-tonric" className="mt-4 rounded-3xl border border-border bg-card p-5 sm:p-6">
             <h2 id="follow-tonric" className="text-sm font-semibold">{lang === "zh" ? "關注拓域創科" : "Follow Tonric"}</h2>
-            <div className="mt-3 flex flex-wrap gap-2">
+            <div className="mt-3 flex gap-2">
               {company.map((s) => (
                 <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`Tonric ${s.label}`}
-                  className="flex h-11 items-center gap-2 rounded-full border border-border bg-secondary px-4 text-sm font-medium transition hover:border-primary/60 active:scale-95">
-                  <s.icon className="size-4 text-primary" aria-hidden /> {s.label}
+                  className="flex h-11 min-w-0 flex-1 items-center justify-center gap-2 rounded-full border border-border bg-secondary px-3 text-sm font-medium transition hover:border-primary/60 active:scale-95">
+                  <s.icon className="size-4 shrink-0 text-primary" aria-hidden /> <span className="truncate">{s.label}</span>
                 </a>
               ))}
             </div>

@@ -63,7 +63,10 @@ export const cardDataSchema = z.object({
       facebook: z.object({ enabled: z.boolean(), url: optionalHttpsUrl }),
       instagram: z.object({ enabled: z.boolean(), url: optionalHttpsUrl }),
     })
-    .default({ facebook: { enabled: false, url: "" }, instagram: { enabled: false, url: "" } }),
+    .default({
+      facebook: { enabled: true, url: "https://www.facebook.com/tonric" },
+      instagram: { enabled: true, url: "https://www.instagram.com/tonric.ai/" },
+    }),
   /** Past employers shown as logos under About Eric; older saved versions get the defaults. */
   brands: z
     .object({ visible: z.boolean(), names: z.array(z.string().trim().max(60)).max(12) })
