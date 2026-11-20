@@ -31,7 +31,7 @@ export function AboutSection({ card, lang, ui }: { card: CardData; lang: Lang; u
   return (
     <section aria-labelledby="about-h" className="mt-4 rounded-3xl border border-border bg-card p-5 sm:p-6">
       <h2 id="about-h" className="text-lg font-semibold">{ui.aboutHeading}</h2>
-      <Panel label={ui.readBio} openLabel={ui.hideBio}>
+      <div className="mt-2">
         {bio.map((p) => (
           <p key={p} className="mt-2 text-sm leading-relaxed text-foreground/90">{p}</p>
         ))}
@@ -40,7 +40,7 @@ export function AboutSection({ card, lang, ui }: { card: CardData; lang: Lang; u
             {ui.linkedinLink} <ExternalLink className="size-3.5" aria-hidden />
           </a>
         )}
-      </Panel>
+      </div>
     </section>
   );
 }

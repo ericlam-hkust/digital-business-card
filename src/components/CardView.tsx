@@ -110,6 +110,17 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
           </p>
           <p className="mt-3 text-[0.95rem] leading-relaxed text-foreground/90">{content.intro}</p>
 
+          {rows.length > 0 && (
+            <nav aria-label="Quick contact" className="mt-4 flex justify-center gap-3">
+              {rows.map((r) => (
+                <a key={r.label} href={r.href} {...(r.ext ? { target: "_blank", rel: "noopener noreferrer" } : {})} aria-label={r.label} title={r.label}
+                  className="grid size-12 place-items-center rounded-full border border-border bg-secondary text-primary transition hover:border-primary/60 active:scale-95">
+                  <r.icon className="size-5" aria-hidden />
+                </a>
+              ))}
+            </nav>
+          )}
+
           <button
             onClick={() => downloadVCard(card)}
             className="mt-5 flex h-13 w-full items-center justify-center gap-2 rounded-2xl bg-primary text-base font-semibold text-primary-foreground transition hover:brightness-105 active:scale-[0.99]"
@@ -126,7 +137,12 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
           </div>
           {manualUrl && <ManualCopy label={t.copyManual} url={manualUrl} />}
 
-          <ul className="mt-5 divide-y divide-border border-t border-border">
+          </section>
+
+        <AboutSection card={card} lang={lang} ui={t} />
+
+        <section className="mt-4 rounded-3xl border border-border bg-card px-5 py-2 sm:px-6">
+          <ul className="divide-y divide-border">
             {rows.map((r) => (
               <li key={r.label}>
                 <a
@@ -147,7 +163,6 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
           </ul>
         </section>
 
-        <AboutSection card={card} lang={lang} ui={t} />
         <ReferralSection card={card} lang={lang} ui={t} onCopied={flash} />
 
         {content.tagline && <p className="mt-6 text-center text-xs text-muted-foreground">{content.tagline}</p>}
