@@ -35,3 +35,4 @@ use the editor.
 - The published snapshot leaves out hidden email/phone (`toPublic`), because anyone can read the published row.
 - QR codes are generated locally with the `qrcode` package; never call third-party QR services.
 - Brand colours are `--tonric-*` CSS variables in `src/styles.css`; the app always renders in dark mode.
+- Past-employer logos are local SVGs in `public/brands/`, matched to company names by `findBrand` in `src/lib/brands.ts`; unknown names show as text. Why: no third-party logo services, and settings only store names.

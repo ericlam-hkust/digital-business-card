@@ -2,6 +2,7 @@ import { useId, useState, type ReactNode } from "react";
 import { ChevronDown, Copy, ExternalLink, Mail } from "lucide-react";
 import { buildIntroduction, type Lang, type UiText } from "@/config/card.config";
 import type { CardData } from "@/lib/card-schema";
+import { findBrand } from "@/lib/brands";
 
 function Panel({ label, openLabel, children }: { label: string; openLabel?: string; children: ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -36,7 +37,32 @@ export function AboutSection({ card, lang, ui, embedded }: { card: CardData; lan
           <p key={p} className="mt-2 text-sm leading-relaxed text-foreground/90">{p}</p>
         ))}
       </div>
+      <BrandLogos card={card} ui={ui} />
     </section>
+  );
+}
+
+function BrandLogos({ card, ui }: { card: CardData; ui: UiText }) {
+  const names = card.brands.visible ? card.brands.names.map((n) => n.trim()).filter(Boolean) : [];
+  if (!names.length) return null;
+  return (
+    <div className="mt-4">
+      <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{ui.brandsLabel}</h3>
+      <ul className="mt-2 grid grid-cols-3 gap-2">
+        {names.map((n) => {
+          const b = findBrand(n);
+          return (
+            <li key={n} className="flex h-14 items-center justify-center rounded-xl bg-brand-tile px-3" title={b?.name ?? n}>
+              {b ? (
+                <img src={b.logo} alt={b.name} loading="lazy" className="max-h-7 max-w-full object-contain" />
+              ) : (
+                <span className="text-center text-xs font-semibold leading-tight text-brand-tile-foreground">{n}</span>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 }
 

@@ -57,6 +57,10 @@ export const cardDataSchema = z.object({
   /** When true, a hidden email/phone is still put in the downloadable contact file. */
   includeHiddenInContactFile: z.boolean(),
   referrals: z.object({ visible: z.boolean(), showNetwork: z.boolean(), showIntro: z.boolean() }),
+  /** Past employers shown as logos under About Eric; older saved versions get the defaults. */
+  brands: z
+    .object({ visible: z.boolean(), names: z.array(z.string().trim().max(60)).max(12) })
+    .default({ visible: true, names: ["PUMA", "Li & Fung", "Pandora", "Tiffany & Co.", "Nike"] }),
   sharing: z.object({ title: z.string().trim().min(1).max(120), description: z.string().trim().min(1).max(300) }),
   text: z.object({ en: contentSchema, zh: contentSchema }),
 }).superRefine((d, ctx) => {

@@ -8,6 +8,7 @@ import { cardDataSchema, missingTranslations, type CardData, type Lang } from "@
 import { cardConfig, defaultCard, getCardUrl } from "@/config/card.config";
 import { CardView } from "@/components/CardView";
 import { BiField, TextField } from "@/components/AdminFields";
+import { findBrand } from "@/lib/brands";
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription,
   AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
@@ -189,6 +190,12 @@ function SettingsPage() {
             {Bi({ label: "Short introduction", field: (l) => ["text", l, "intro"], area: true })}
             {Bi({ label: "Tagline", field: (l) => ["text", l, "tagline"] })}
             {Bi({ label: "Full bio (leave a blank line between paragraphs)", field: (l) => ["text", l, "bio"], area: true })}
+            <TextField label="Brands worked with (one company per line)" area value={draft.brands.names.join("\n")} onChange={(v) => set(["brands", "names"])(String(v).split("\n").slice(0, 12))} error={err(["brands", "names"])} />
+            <p className="text-xs text-muted-foreground">
+              {draft.brands.names.filter((n) => n.trim()).map((n) => `${n.trim()}: ${findBrand(n) ? "logo found" : "shown as text"}`).join(" · ") || "No brands listed."}
+              {" "}Logos available: PUMA, Li & Fung, Pandora, Tiffany & Co., Nike.
+            </p>
+            <Toggle label="Show brand logos under About Eric" checked={draft.brands.visible} onChange={set(["brands", "visible"])} />
             <p className="text-xs text-muted-foreground">Headshot: photo uploads aren't available yet. The current photo stays, and the "{cardConfig.initials}" monogram shows if it's removed.</p>
           </Section>
 

@@ -32,6 +32,8 @@
 @theme inline {
   --font-sans: "Manrope", "Noto Sans TC", "PingFang HK", "Microsoft JhengHei", system-ui, sans-serif;
   --color-qr-bg: var(--qr-bg);
+  --color-brand-tile: var(--brand-tile);
+  --color-brand-tile-foreground: var(--brand-tile-foreground);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -119,6 +121,8 @@
   --tonric-accent: #c5f54a;
   --tonric-border: #2a332c;
   --qr-bg: #ffffff;
+  --brand-tile: #f4f4f1;
+  --brand-tile-foreground: #1a1a1a;
 }
 
 .dark {
