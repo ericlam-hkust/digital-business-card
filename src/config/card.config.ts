@@ -37,6 +37,7 @@ export const defaultCard: CardData = {
   show: { email: true, phone: true, website: true },
   includeHiddenInContactFile: false,
   referrals: { visible: true, showNetwork: true, showIntro: true },
+  headshot: "",
   brands: { visible: true, names: ["PUMA", "Li & Fung", "Pandora", "Tiffany & Co.", "Nike"] },
   sharing: {
     title: "Eric Lam | Tonric Limited",

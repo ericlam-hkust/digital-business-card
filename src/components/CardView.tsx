@@ -92,8 +92,8 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
 
         <section className="mt-3 rounded-3xl border border-border bg-card p-5 sm:p-6">
           <div className="flex items-center gap-4">
-            {c.headshotUrl ? (
-              <img src={c.headshotUrl} alt={t.photoAlt} className="size-20 shrink-0 rounded-full object-cover ring-2 ring-primary/70 ring-offset-4 ring-offset-card sm:size-24" />
+            {card.headshot || c.headshotUrl ? (
+              <img src={card.headshot || c.headshotUrl || ""} alt={t.photoAlt} className="size-20 shrink-0 rounded-full object-cover ring-2 ring-primary/70 ring-offset-4 ring-offset-card sm:size-24" />
             ) : (
               <div className="grid size-20 shrink-0 place-items-center rounded-full bg-secondary text-2xl font-semibold text-primary">{c.initials}</div>
             )}

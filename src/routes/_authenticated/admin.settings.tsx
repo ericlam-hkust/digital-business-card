@@ -7,7 +7,7 @@ import { getAdminState, publishCard, saveDraft } from "@/lib/card.functions";
 import { cardDataSchema, missingTranslations, type CardData, type Lang } from "@/lib/card-schema";
 import { cardConfig, defaultCard, getCardUrl } from "@/config/card.config";
 import { CardView } from "@/components/CardView";
-import { BiField, TextField } from "@/components/AdminFields";
+import { BiField, TextField, PhotoField } from "@/components/AdminFields";
 import { findBrand } from "@/lib/brands";
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription,
@@ -178,6 +178,7 @@ function SettingsPage() {
           )}
 
           <Section title="Profile">
+            <PhotoField value={draft.headshot} fallback={cardConfig.headshotUrl} onChange={set(["headshot"])} />
             <TextField label="Display name" value={draft.name.full} onChange={set(["name", "full"])} error={err(["name", "full"])} />
             <div className="grid grid-cols-2 gap-3">
               <TextField label="First name (contact file)" value={draft.name.first} onChange={set(["name", "first"])} error={err(["name", "first"])} />

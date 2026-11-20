@@ -1,0 +1,3 @@
+CREATE POLICY "Owner uploads card photos" ON storage.objects FOR INSERT TO authenticated WITH CHECK (bucket_id = 'card-photos' AND public.is_card_owner());
+CREATE POLICY "Owner updates card photos" ON storage.objects FOR UPDATE TO authenticated USING (bucket_id = 'card-photos' AND public.is_card_owner());
+CREATE POLICY "Owner deletes card photos" ON storage.objects FOR DELETE TO authenticated USING (bucket_id = 'card-photos' AND public.is_card_owner());

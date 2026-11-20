@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Lang } from "@/lib/card-schema";
 
 export function TextField({ label, value, onChange, error, area, type = "text" }: { label: string; value: string; onChange: (v: string) => void; error?: string | undefined; area?: boolean | undefined; type?: string }) {
@@ -23,5 +24,39 @@ export function BiField({ label, area, values }: { label: string; area?: boolean
         <TextField key={v.l} label={v.l === "en" ? "EN" : "繁中"} value={v.value} onChange={v.onChange} area={area} error={v.error} />
       ))}
     </fieldset>
+  );
+}
+
+/** Resizes an image file to a square 400px JPEG data URL (centre crop). */
+async function toHeadshot(file: File): Promise<string> {
+  const bmp = await createImageBitmap(file);
+  const side = Math.min(bmp.width, bmp.height);
+  const canvas = document.createElement("canvas");
+  canvas.width = canvas.height = 400;
+  canvas.getContext("2d")!.drawImage(bmp, (bmp.width - side) / 2, (bmp.height - side) / 2, side, side, 0, 0, 400, 400);
+  return canvas.toDataURL("image/jpeg", 0.85);
+}
+
+export function PhotoField({ value, fallback, onChange }: { value: string; fallback: string | null; onChange: (v: string) => void }) {
+  const [error, setError] = useState("");
+  const src = value || fallback;
+  return (
+    <div className="flex items-center gap-4">
+      {src ? <img src={src} alt="Headshot" className="size-20 rounded-full object-cover ring-2 ring-primary/70" /> : <div className="size-20 rounded-full bg-secondary" />}
+      <div className="space-y-2 text-sm">
+        <label className="inline-block cursor-pointer rounded-lg border border-border px-3 py-1.5 font-medium hover:border-primary">
+          Upload new headshot
+          <input type="file" accept="image/*" className="sr-only" onChange={async (e) => {
+            const f = e.target.files?.[0]; e.target.value = "";
+            if (!f) return;
+            if (!f.type.startsWith("image/")) return setError("Please choose an image file");
+            try { setError(""); onChange(await toHeadshot(f)); } catch { setError("Couldn't read that image — try a JPG or PNG"); }
+          }} />
+        </label>
+        {value && <button type="button" className="ml-2 text-muted-foreground underline" onClick={() => onChange("")}>Use original photo</button>}
+        <p className="text-muted-foreground">Square-cropped automatically. Publish to update the live card.</p>
+        {error && <p className="text-destructive">{error}</p>}
+      </div>
+    </div>
   );
 }
