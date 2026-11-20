@@ -212,6 +212,7 @@ function SettingsPage() {
           </Section>
 
           <Section title="Contact and links">
+            <Toggle label="Show the contact icons under your name" checked={draft.show.quickIcons} onChange={set(["show", "quickIcons"])} />
             <TextField label="Work email" type="email" value={draft.email} onChange={set(["email"])} error={err(["email"])} />
             <Toggle label="Show email on card" checked={draft.show.email} onChange={set(["show", "email"])} />
             <TextField label="Phone (international format)" type="tel" value={draft.phone} onChange={set(["phone"])} error={err(["phone"])} />

@@ -36,7 +36,7 @@ export const defaultCard: CardData = {
   website: "https://tonric.com",
   linkedin: { enabled: true, url: "https://www.linkedin.com/in/ericlamhf/" },
   whatsapp: { enabled: false, number: "85266169018" },
-  show: { email: true, phone: true, website: true },
+  show: { email: true, phone: true, website: true, quickIcons: false },
   includeHiddenInContactFile: false,
   referrals: { visible: true, showNetwork: true, showIntro: true },
   headshot: "",

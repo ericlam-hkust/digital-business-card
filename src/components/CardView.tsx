@@ -137,7 +137,7 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
             <MapPin className="size-3.5 text-primary" aria-hidden /> {content.location}
           </p>
           <p className="mt-4 text-[0.95rem] leading-relaxed text-foreground/90">{content.intro}</p>
-          {rows.length > 0 && (
+          {rows.length > 0 && card.show.quickIcons && (
             <nav aria-label="Quick contact" className="mt-4 flex justify-center gap-3">
               {rows.map((r) => (
                 <a key={r.label} href={r.href} {...(r.ext ? { target: "_blank", rel: "noopener noreferrer" } : {})} aria-label={r.label} title={r.label}
