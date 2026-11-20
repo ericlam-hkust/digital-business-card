@@ -62,12 +62,12 @@ export const cardDataSchema = z.object({
     .object({
       facebook: z.object({ enabled: z.boolean(), url: optionalHttpsUrl }),
       instagram: z.object({ enabled: z.boolean(), url: optionalHttpsUrl }),
-      linkedin: z.object({ enabled: z.boolean(), url: optionalHttpsUrl }).default({ enabled: false, url: "" }),
+      linkedin: z.object({ enabled: z.boolean(), url: optionalHttpsUrl }).default({ enabled: true, url: "https://www.linkedin.com/company/tonric" }),
     })
     .default({
       facebook: { enabled: true, url: "https://www.facebook.com/tonric" },
       instagram: { enabled: true, url: "https://www.instagram.com/tonric.ai/" },
-      linkedin: { enabled: false, url: "" },
+      linkedin: { enabled: true, url: "https://www.linkedin.com/company/tonric" },
     }),
   /** Past employers shown as logos under About Eric; older saved versions get the defaults. */
   brands: z

@@ -44,7 +44,7 @@ export const defaultCard: CardData = {
   socials: {
     facebook: { enabled: true, url: "https://www.facebook.com/tonric" },
     instagram: { enabled: true, url: "https://www.instagram.com/tonric.ai/" },
-    linkedin: { enabled: false, url: "" },
+    linkedin: { enabled: true, url: "https://www.linkedin.com/company/tonric" },
   },
   brands: { visible: true, names: ["PUMA", "Li & Fung", "Pandora", "Tiffany & Co.", "Nike"] },
   sharing: {
