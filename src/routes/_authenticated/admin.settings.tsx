@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { getAdminState, publishCard, saveDraft } from "@/lib/card.functions";
 import { cardDataSchema, missingTranslations, type CardData, type Lang } from "@/lib/card-schema";
-import { cardConfig, getCardUrl } from "@/config/card.config";
+import { cardConfig, defaultCard, getCardUrl } from "@/config/card.config";
 import { CardView } from "@/components/CardView";
 import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription,
@@ -215,6 +215,14 @@ function SettingsPage() {
             <Toggle label="Show the referral section" checked={draft.referrals.visible} onChange={set(["referrals", "visible"])} />
             <Toggle label="Show the partner network panel" checked={draft.referrals.showNetwork} onChange={set(["referrals", "showNetwork"])} />
             <Toggle label="Show the introduction panel" checked={draft.referrals.showIntro} onChange={set(["referrals", "showIntro"])} />
+            <button
+              type="button"
+              onClick={() => setDraft((d) => (d ? { ...d, text: { en: { ...d.text.en, ref: structuredClone(defaultCard.text.en.ref) }, zh: { ...d.text.zh, ref: structuredClone(defaultCard.text.zh.ref) } } } : d))}
+              className="h-10 rounded-xl border border-border px-4 text-sm"
+            >
+              Use latest suggested referral wording
+            </button>
+            <p className="text-xs text-muted-foreground">Replaces all referral text below in both languages. Then Preview and Publish Changes.</p>
             <Bi label="Section heading" field={(l) => ["text", l, "ref", "heading"]} />
             <Bi label="Product positioning" field={(l) => ["text", l, "ref", "positioning"]} area />
             <Bi label="Current referral ask" field={(l) => ["text", l, "ref", "ask"]} area />
