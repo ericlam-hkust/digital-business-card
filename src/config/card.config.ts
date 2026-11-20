@@ -111,7 +111,7 @@ export const defaultCard: CardData = {
 export const uiText = {
   en: {
     save: "Save Contact", share: "Share Card", showQr: "Show QR",
-    email: "Email", call: "Call", website: "Website", digitalCard: "Digital Card", fansHeading: "Tonric Fans Pages", companyWebsite: "Company website", linkedin: "LinkedIn", whatsapp: "WhatsApp",
+    email: "Email", call: "Call", website: "Website", digitalCard: "Digital Card", fansHeading: "Tonric's Social Pages", companyWebsite: "Company website", linkedin: "LinkedIn", whatsapp: "WhatsApp",
     linkCopied: "Link copied", copyLink: "Copy Link", downloadQr: "Download QR", close: "Close",
     qrTitle: "Scan to open my card", preview: "Preview — final link not set. Do not print.",
     copyManual: "Copy this link:", langToggle: "切換至繁體中文", photoAlt: "Photo of Eric Lam",
