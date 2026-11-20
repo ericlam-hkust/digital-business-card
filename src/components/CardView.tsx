@@ -96,13 +96,13 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
             aria-checked={lang === "zh"}
             onClick={toggleLang}
             aria-label={t.langToggle}
-            className="relative flex items-center gap-1 rounded-full border border-primary/40 bg-secondary/60 p-1 text-xs font-semibold shadow-sm transition hover:border-primary"
+            className="relative flex items-center gap-1 rounded-full border border-border p-1 text-xs font-semibold transition hover:bg-secondary/40"
           >
-            <Globe className="ml-1 size-3.5 text-primary" aria-hidden />
+            <Globe className="ml-1 size-3.5 text-muted-foreground" aria-hidden />
             <span className="relative grid grid-cols-2">
-              <span aria-hidden className={`absolute inset-y-0 w-1/2 rounded-full bg-primary transition-transform duration-300 ${lang === "zh" ? "translate-x-0" : "translate-x-full"}`} />
-              <span className={`relative z-10 px-3 py-1 transition-colors ${lang === "zh" ? "text-primary-foreground" : "text-muted-foreground"}`}>繁中</span>
-              <span className={`relative z-10 px-3 py-1 transition-colors ${lang === "en" ? "text-primary-foreground" : "text-muted-foreground"}`}>EN</span>
+              <span aria-hidden className={`absolute inset-y-0 w-1/2 rounded-full bg-secondary transition-transform duration-300 ${lang === "zh" ? "translate-x-0" : "translate-x-full"}`} />
+              <span className={`relative z-10 px-3 py-1 transition-colors ${lang === "zh" ? "text-foreground" : "text-muted-foreground"}`}>繁中</span>
+              <span className={`relative z-10 px-3 py-1 transition-colors ${lang === "en" ? "text-foreground" : "text-muted-foreground"}`}>EN</span>
             </span>
           </button>
         </header>
@@ -140,7 +140,7 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
             </p>
           </div>
           <p className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground">
-            <MapPin className="size-3.5 text-primary" aria-hidden /> {content.location}
+            <MapPin className="size-3.5 text-muted-foreground" aria-hidden /> {content.location}
           </p>
           <p className="mt-4 text-[0.95rem] leading-relaxed text-foreground/90">{content.intro}</p>
           {quickRows.length > 0 && card.show.quickIcons && (
