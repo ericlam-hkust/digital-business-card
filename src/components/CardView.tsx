@@ -110,21 +110,26 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
           <div className="px-5 pb-5 sm:px-6 sm:pb-6">
           <div className="relative z-10 -mt-10 flex items-end gap-4">
             {card.headshot || c.headshotUrl ? (
-              <img src={card.headshot || c.headshotUrl || ""} alt={t.photoAlt} className="size-24 shrink-0 rounded-full border-4 border-card object-cover ring-2 ring-primary/70" />
+              <img src={card.headshot || c.headshotUrl || ""} alt={t.photoAlt} className="size-20 shrink-0 rounded-full sm:size-24 border-4 border-card object-cover ring-2 ring-primary/70" />
             ) : (
-              <div className="grid size-24 shrink-0 place-items-center rounded-full border-4 border-card bg-secondary text-2xl font-semibold text-primary">{c.initials}</div>
+              <div className="grid size-20 shrink-0 place-items-center rounded-full sm:size-24 border-4 border-card bg-secondary text-2xl font-semibold text-primary">{c.initials}</div>
             )}
+            <div className="mb-1 flex min-w-0 flex-1 flex-col items-end gap-1.5 text-right">
             {company.length > 0 && (
-                <nav aria-label={lang === "zh" ? "關注拓域創科" : "Follow Tonric"} className="mb-1 ml-auto flex items-center gap-1.5">
+                <nav aria-label={lang === "zh" ? "關注拓域創科" : "Follow Tonric"} className="flex items-center justify-end gap-1 min-[380px]:gap-1.5">
                   <span className="mr-1 hidden text-[0.7rem] font-medium text-foreground/80 min-[380px]:inline">{lang === "zh" ? "關注拓域創科" : "Follow Tonric"}</span>
                   {company.map((s) => (
                     <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={`Tonric ${s.label}`} title={`Tonric ${s.label}`}
-                      className="grid size-9 place-items-center rounded-full border border-foreground/15 bg-background/50 text-foreground backdrop-blur-md transition hover:border-primary hover:text-primary active:scale-95">
+                      className="grid size-8 shrink-0 place-items-center rounded-full border border-foreground/15 min-[380px]:size-9 bg-background/50 text-foreground backdrop-blur-md transition hover:border-primary hover:text-primary active:scale-95">
                       <s.icon className="size-4" aria-hidden />
                     </a>
                   ))}
                 </nav>
               )}
+            {content.intro && (
+              <p className="max-w-[18rem] text-[0.7rem] leading-snug text-foreground/80 sm:text-xs">{content.intro}</p>
+            )}
+            </div>
           </div>
           <div className="mt-3 min-w-0">
             <h1 className="text-[1.75rem] font-semibold leading-tight tracking-tight">{card.name.full}</h1>
@@ -185,7 +190,6 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
           </ul>
             </div>
           )}
-          <p className="mt-5 text-[0.95rem] leading-relaxed text-foreground/90">{content.intro}</p>
           <AboutSection card={card} lang={lang} ui={t} embedded />
           </div>
           </section>
