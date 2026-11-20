@@ -75,6 +75,8 @@ export const cardDataSchema = z.object({
     .default({ visible: true, names: ["PUMA", "Pandora", "Tiffany & Co.", "Nike"] }),
   /** Uploaded headshot as a small JPEG data URL; empty uses the built-in photo. */
   headshot: z.string().max(400_000).refine((v) => v === "" || v.startsWith("data:image/"), "Invalid photo").default(""),
+  /** Social-sized rendition of the uploaded headshot; empty uses the built-in share image. */
+  shareHeadshot: z.string().max(900_000).refine((v) => v === "" || v.startsWith("data:image/jpeg;base64,"), "Invalid share photo").default(""),
   /** Uploaded cover banner as a JPEG data URL; empty uses the built-in Tonric banner. */
   cover: z.string().max(900_000).refine((v) => v === "" || v.startsWith("data:image/"), "Invalid banner").default(""),
   sharing: z.object({ title: z.string().trim().min(1).max(120), description: z.string().trim().min(1).max(300) }),

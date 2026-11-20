@@ -40,6 +40,7 @@ export const defaultCard: CardData = {
   includeHiddenInContactFile: false,
   referrals: { visible: true, showNetwork: true, showIntro: true },
   headshot: "",
+  shareHeadshot: "",
   cover: "",
   socials: {
     facebook: { enabled: true, url: "https://www.facebook.com/tonric" },

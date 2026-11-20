@@ -1,7 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { getPublishedCard } from "@/lib/card.functions";
+import { getRequestOrigin } from "@/lib/origin.functions";
 import { CardView } from "@/components/CardView";
+import { cardConfig, defaultCard } from "@/config/card.config";
+import { shareImageForCard } from "@/lib/share-image";
 
 export const publishedCardQuery = queryOptions({
   queryKey: ["published-card"],
@@ -10,10 +13,20 @@ export const publishedCardQuery = queryOptions({
 });
 
 export const Route = createFileRoute("/eric")({
-  loader: ({ context }) => context.queryClient.ensureQueryData(publishedCardQuery),
+  loader: async ({ context }) => {
+    const [card, origin] = await Promise.all([
+      context.queryClient.ensureQueryData(publishedCardQuery),
+      getRequestOrigin(),
+    ]);
+    return { card, origin };
+  },
   head: ({ loaderData }) => {
-    const title = loaderData?.card.sharing.title ?? "Eric Lam | Tonric Limited";
-    const desc = loaderData?.card.sharing.description ?? "Digital business card of Eric Lam, Co-founder & CEO of Tonric Limited.";
+    const card = loaderData?.card.card ?? defaultCard;
+    const title = card.sharing.title;
+    const desc = card.sharing.description;
+    const shareImage = shareImageForCard(card);
+    const imageUrl = loaderData ? new URL(shareImage.path, loaderData.origin).toString() : null;
+    const cardUrl = loaderData ? cardConfig.canonicalUrl || new URL(cardConfig.cardPath, loaderData.origin).toString() : null;
     return {
       meta: [
         { title },
@@ -21,8 +34,19 @@ export const Route = createFileRoute("/eric")({
         { property: "og:title", content: title },
         { property: "og:description", content: desc },
         { property: "og:type", content: "profile" },
-        { name: "twitter:card", content: "summary" },
+        ...(cardUrl ? [{ property: "og:url", content: cardUrl }] : []),
+        ...(imageUrl ? [
+          { property: "og:image", content: imageUrl },
+          { property: "og:image:width", content: String(shareImage.width) },
+          { property: "og:image:height", content: String(shareImage.height) },
+          { property: "og:image:type", content: "image/jpeg" },
+          { property: "og:image:alt", content: "Portrait of Eric Lam" },
+          { name: "twitter:image", content: imageUrl },
+          { name: "twitter:image:alt", content: "Portrait of Eric Lam" },
+        ] : []),
+        { name: "twitter:card", content: "summary_large_image" },
       ],
+      links: cardUrl ? [{ rel: "canonical", href: cardUrl }] : [],
     };
   },
   component: CardPage,

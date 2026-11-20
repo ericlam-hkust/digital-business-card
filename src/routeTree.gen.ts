@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as EricRouteImport } from './routes/eric'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
+import { Route as ApiPublicShareHeadshotRouteImport } from './routes/api/public/share-headshot'
 import { Route as ApiPublicVcardRouteImport } from './routes/api/public/vcard'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +42,11 @@ const AuthenticatedAdminSettingsRoute =
     path: '/admin/settings',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiPublicShareHeadshotRoute = ApiPublicShareHeadshotRouteImport.update({
+  id: '/api/public/share-headshot',
+  path: '/api/public/share-headshot',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicVcardRoute = ApiPublicVcardRouteImport.update({
   id: '/api/public/vcard',
   path: '/api/public/vcard',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/eric': typeof EricRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/api/public/share-headshot': typeof ApiPublicShareHeadshotRoute
   '/api/public/vcard': typeof ApiPublicVcardRoute
 }
 export interface FileRoutesByTo {
@@ -59,6 +66,7 @@ export interface FileRoutesByTo {
   '/eric': typeof EricRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/api/public/share-headshot': typeof ApiPublicShareHeadshotRoute
   '/api/public/vcard': typeof ApiPublicVcardRoute
 }
 export interface FileRoutesById {
@@ -68,14 +76,26 @@ export interface FileRoutesById {
   '/eric': typeof EricRoute
   '/admin/login': typeof AdminLoginRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/api/public/share-headshot': typeof ApiPublicShareHeadshotRoute
   '/api/public/vcard': typeof ApiPublicVcardRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/eric' | '/admin/login' | '/admin/settings' | '/api/public/vcard'
+    | '/'
+    | '/eric'
+    | '/admin/login'
+    | '/admin/settings'
+    | '/api/public/share-headshot'
+    | '/api/public/vcard'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/eric' | '/admin/login' | '/admin/settings' | '/api/public/vcard'
+  to:
+    | '/'
+    | '/eric'
+    | '/admin/login'
+    | '/admin/settings'
+    | '/api/public/share-headshot'
+    | '/api/public/vcard'
   id:
     | '__root__'
     | '/'
@@ -83,6 +103,7 @@ export interface FileRouteTypes {
     | '/eric'
     | '/admin/login'
     | '/_authenticated/admin/settings'
+    | '/api/public/share-headshot'
     | '/api/public/vcard'
   fileRoutesById: FileRoutesById
 }
@@ -91,6 +112,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   EricRoute: typeof EricRoute
   AdminLoginRoute: typeof AdminLoginRoute
+  ApiPublicShareHeadshotRoute: typeof ApiPublicShareHeadshotRoute
   ApiPublicVcardRoute: typeof ApiPublicVcardRoute
 }
 
@@ -131,6 +153,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/share-headshot': {
+      id: '/api/public/share-headshot'
+      path: '/api/public/share-headshot'
+      fullPath: '/api/public/share-headshot'
+      preLoaderRoute: typeof ApiPublicShareHeadshotRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/vcard': {
       id: '/api/public/vcard'
       path: '/api/public/vcard'
@@ -157,6 +186,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   EricRoute: EricRoute,
   AdminLoginRoute: AdminLoginRoute,
+  ApiPublicShareHeadshotRoute: ApiPublicShareHeadshotRoute,
   ApiPublicVcardRoute: ApiPublicVcardRoute,
 }
 export const routeTree = rootRouteImport

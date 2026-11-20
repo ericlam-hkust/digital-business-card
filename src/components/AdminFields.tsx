@@ -27,17 +27,34 @@ export function BiField({ label, area, values }: { label: string; area?: boolean
   );
 }
 
-/** Resizes an image file to a square 400px JPEG data URL (centre crop). */
-async function toHeadshot(file: File): Promise<string> {
+/** Resizes an image to the card headshot and a 1200 × 630 social-link preview. */
+async function toHeadshots(file: File): Promise<{ headshot: string; shareHeadshot: string }> {
   const bmp = await createImageBitmap(file);
   const side = Math.min(bmp.width, bmp.height);
+  const sx = (bmp.width - side) / 2;
+  const sy = (bmp.height - side) / 2;
   const canvas = document.createElement("canvas");
   canvas.width = canvas.height = 400;
-  canvas.getContext("2d")!.drawImage(bmp, (bmp.width - side) / 2, (bmp.height - side) / 2, side, side, 0, 0, 400, 400);
-  return canvas.toDataURL("image/jpeg", 0.85);
+  canvas.getContext("2d")!.drawImage(bmp, sx, sy, side, side, 0, 0, 400, 400);
+
+  const share = document.createElement("canvas");
+  share.width = 1200;
+  share.height = 630;
+  const ctx = share.getContext("2d")!;
+  const coverScale = Math.max(share.width / bmp.width, share.height / bmp.height);
+  const sw = share.width / coverScale;
+  const sh = share.height / coverScale;
+  ctx.filter = "blur(34px)";
+  ctx.drawImage(bmp, (bmp.width - sw) / 2, (bmp.height - sh) / 2, sw, sh, 0, 0, share.width, share.height);
+  ctx.filter = "none";
+  ctx.fillStyle = "rgba(0, 0, 0, 0.58)";
+  ctx.fillRect(0, 0, share.width, share.height);
+  ctx.drawImage(bmp, sx, sy, side, side, 285, 0, 630, 630);
+
+  return { headshot: canvas.toDataURL("image/jpeg", 0.85), shareHeadshot: share.toDataURL("image/jpeg", 0.88) };
 }
 
-export function PhotoField({ value, fallback, onChange }: { value: string; fallback: string | null; onChange: (v: string) => void }) {
+export function PhotoField({ value, fallback, onChange }: { value: string; fallback: string | null; onChange: (headshot: string, shareHeadshot: string) => void }) {
   const [error, setError] = useState("");
   const src = value || fallback;
   return (
@@ -50,11 +67,15 @@ export function PhotoField({ value, fallback, onChange }: { value: string; fallb
             const f = e.target.files?.[0]; e.target.value = "";
             if (!f) return;
             if (!f.type.startsWith("image/")) return setError("Please choose an image file");
-            try { setError(""); onChange(await toHeadshot(f)); } catch { setError("Couldn't read that image — try a JPG or PNG"); }
+            try {
+              setError("");
+              const images = await toHeadshots(f);
+              onChange(images.headshot, images.shareHeadshot);
+            } catch { setError("Couldn't read that image — try a JPG or PNG"); }
           }} />
         </label>
-        {value && <button type="button" className="ml-2 text-muted-foreground underline" onClick={() => onChange("")}>Use original photo</button>}
-        <p className="text-muted-foreground">Square-cropped automatically. Publish to update the live card.</p>
+        {value && <button type="button" className="ml-2 text-muted-foreground underline" onClick={() => onChange("", "")}>Use original photo</button>}
+        <p className="text-muted-foreground">Square-cropped automatically and used for link previews. Publish to update the live card.</p>
         {error && <p className="text-destructive">{error}</p>}
       </div>
     </div>

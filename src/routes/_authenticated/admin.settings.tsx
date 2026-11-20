@@ -178,7 +178,11 @@ function SettingsPage() {
           )}
 
           <Section title="Profile">
-            <PhotoField value={draft.headshot} fallback={cardConfig.headshotUrl} onChange={set(["headshot"])} />
+            <PhotoField
+              value={draft.headshot}
+              fallback={cardConfig.headshotUrl}
+              onChange={(headshot, shareHeadshot) => setDraft((d) => (d ? { ...d, headshot, shareHeadshot } : d))}
+            />
             <p className="pt-2 text-sm font-medium">Cover banner</p>
             <CoverField value={draft.cover} fallback={cardConfig.coverUrl} onChange={set(["cover"])} />
             <TextField label="Display name" value={draft.name.full} onChange={set(["name", "full"])} error={err(["name", "full"])} />
@@ -199,7 +203,7 @@ function SettingsPage() {
               {" "}Logos available: PUMA, Li & Fung, Pandora, Tiffany & Co., Nike.
             </p>
             <Toggle label="Show brand logos under About Eric" checked={draft.brands.visible} onChange={set(["brands", "visible"])} />
-            <p className="text-xs text-muted-foreground">Headshot: photo uploads aren't available yet. The current photo stays, and the "{cardConfig.initials}" monogram shows if it's removed.</p>
+            <p className="text-xs text-muted-foreground">Your published headshot is also used when your card link is shared. The "{cardConfig.initials}" monogram shows if no photo is available.</p>
           </Section>
 
           <Section title="Contact and links">
