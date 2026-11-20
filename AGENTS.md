@@ -30,6 +30,8 @@ use the editor.
 <!-- LOVABLE:END -->
 
 ## Project rules
-- All card profile data, links, translations and toggles live in `src/config/card.config.ts`; components read only from it (single place to edit).
+- Editable card content follows `src/lib/card-schema.ts`. Built-in defaults and fallback content are in `src/config/card.config.ts`. At runtime the public card reads only the published database row and falls back to the defaults when that row is missing or invalid, so the card never renders empty.
+- The card owner is the email in `public.card_owner`. Owner checks, saving the draft and publishing happen in security-definer database functions; the `/admin` route guard is only for user experience.
+- The published snapshot leaves out hidden email/phone (`toPublic`), because anyone can read the published row.
 - QR codes are generated locally with the `qrcode` package; never call third-party QR services.
 - Brand colours are `--tonric-*` CSS variables in `src/styles.css`; the app always renders in dark mode.
