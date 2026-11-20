@@ -9,10 +9,9 @@ import { downloadVCard } from "@/lib/vcard";
 import { AboutSection, ReferralSection } from "@/components/ProfileSections";
 
 /** The business card itself; used by the public page and the private draft preview. */
-const LANG_KEY = "card-lang";
 
 export function CardView({ card, banner }: { card: CardData; banner?: ReactNode }) {
-  const [lang, setLang] = useState<Lang>("en");
+  const [lang, setLang] = useState<Lang>("zh");
   const [toast, setToast] = useState<string | null>(null);
   const [manualUrl, setManualUrl] = useState<string | null>(null);
   const [qrOpen, setQrOpen] = useState(false);
@@ -21,8 +20,6 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
 
   useEffect(() => {
     setOrigin(window.location.origin);
-    const saved = localStorage.getItem(LANG_KEY);
-    if (saved === "en" || saved === "zh") setLang(saved);
   }, []);
   useEffect(() => {
     document.documentElement.lang = lang === "zh" ? "zh-Hant-HK" : "en";
@@ -61,7 +58,6 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
   const toggleLang = () => {
     const next = lang === "en" ? "zh" : "en";
     setLang(next);
-    localStorage.setItem(LANG_KEY, next);
   };
 
   const channels = [
@@ -95,12 +91,19 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
             <span className="text-lg font-semibold tracking-tight">tonric</span>
           )}
           <button
+            type="button"
+            role="switch"
+            aria-checked={lang === "zh"}
             onClick={toggleLang}
             aria-label={t.langToggle}
-            className="flex rounded-full border border-border p-0.5 text-xs font-medium"
+            className="relative flex items-center gap-1 rounded-full border border-primary/40 bg-secondary/60 p-1 text-xs font-semibold shadow-sm transition hover:border-primary"
           >
-            <span className={`rounded-full px-2.5 py-1 ${lang === "en" ? "bg-secondary text-foreground" : "text-muted-foreground"}`}>EN</span>
-            <span className={`rounded-full px-2.5 py-1 ${lang === "zh" ? "bg-secondary text-foreground" : "text-muted-foreground"}`}>繁中</span>
+            <Globe className="ml-1 size-3.5 text-primary" aria-hidden />
+            <span className="relative grid grid-cols-2">
+              <span aria-hidden className={`absolute inset-y-0 w-1/2 rounded-full bg-primary transition-transform duration-300 ${lang === "zh" ? "translate-x-0" : "translate-x-full"}`} />
+              <span className={`relative z-10 px-3 py-1 transition-colors ${lang === "zh" ? "text-primary-foreground" : "text-muted-foreground"}`}>繁中</span>
+              <span className={`relative z-10 px-3 py-1 transition-colors ${lang === "en" ? "text-primary-foreground" : "text-muted-foreground"}`}>EN</span>
+            </span>
           </button>
         </header>
 
