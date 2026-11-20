@@ -56,7 +56,7 @@ export const defaultCard: CardData = {
       title: "Co-founder & CEO",
       location: "Hong Kong",
       intro: "I help Hong Kong SMEs put AI to work, from automating everyday workflows to building custom software.",
-      tagline: "Make the right solution. Ship the solution right.",
+      tagline: "Tell us your idea, We make the magic.",
       bio:
         "Eric Lam is Co-founder & CEO of Tonric Limited, where he helps Hong Kong SMEs identify practical uses for AI, automate manual workflows, and build software that fits the way they work.\n\nEric brings over a decade of experience in digital transformation, enterprise systems, and process innovation across global consumer brands. At PUMA Group, he leads digital solutions and process innovation for supply chain operations, including AI, automation, and enterprise systems initiatives. His earlier experience includes roles at Pandora, Tiffany & Co., and Nike.",
       ref: {
@@ -82,7 +82,7 @@ export const defaultCard: CardData = {
       title: "聯合創辦人兼行政總裁",
       location: "香港",
       intro: "我協助香港中小企將 AI 應用於實際業務，從日常流程自動化到度身訂造軟件。",
-      tagline: "Make the right solution. Ship the solution right.",
+      tagline: "拓展你所想，成就你的領域",
       bio:
         "Eric Lam 是拓域創科（Tonric Limited）的聯合創辦人兼行政總裁，專注協助香港中小企找出切合業務需要的 AI 應用場景、自動化人手流程，以及開發配合日常營運的軟件。\n\nEric 在國際消費品牌累積逾十年數碼轉型、企業系統及流程創新經驗。他現於 PUMA Group 領導供應鏈數碼方案及流程創新，負責推動 AI、自動化及企業系統項目，過往亦曾任職於 Pandora、Tiffany & Co. 及 Nike。",
       ref: {
