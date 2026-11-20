@@ -52,20 +52,20 @@ export const defaultCard: CardData = {
       ref: {
         heading: "Referrals & Partnerships",
         positioning:
-          "Tonric is building a 24/7 WhatsApp customer service agent and CRM for Hong Kong SMEs. The goal is to help teams answer common enquiries outside business hours and keep track of customer conversations and follow-ups in one place.",
-        ask: "Please introduce me to the owner or customer service lead of a Hong Kong SME that already serves customers on WhatsApp and struggles to reply after hours or keep track of follow-ups. I’d especially like to meet service businesses that handle frequent enquiries about bookings, pricing, or availability.",
+          "Tonric’s AI-powered WhatsApp agent and intelligent CRM help Hong Kong SMEs serve customers 24/7. The AI understands each enquiry, answers instantly in natural language, and automatically captures every conversation, lead and follow-up in one smart workspace.",
+        ask: "Please introduce me to the owner or customer service lead of a Hong Kong SME that serves customers on WhatsApp and wants AI to reply after hours and track every follow-up automatically. I’d especially like to meet service businesses that handle frequent enquiries about bookings, pricing, or availability.",
         cues: [
           "“Customers message us after closing, but nobody replies until the next day.”",
           "“We answer the same questions about prices, bookings, and availability all day.”",
           "“Several staff handle WhatsApp, but we don’t know who replied or which enquiry still needs follow-up.”",
         ],
         network: [
-          { title: "Upstream — Referral partners", body: "SME advisers, business association contacts, and marketing agencies that can introduce owners or customer service leads whose teams handle frequent WhatsApp enquiries." },
-          { title: "Midstream — Solution partners", body: "CRM implementers, booking-system providers, and digital agencies that may collaborate with Tonric on a shared client opportunity." },
-          { title: "Downstream — Delivery suppliers", body: "Messaging platform providers, cloud vendors, and integration specialists whom Tonric may directly pay for products or services needed to deliver the solution." },
+          { title: "Upstream — Referral partners", body: "SME advisers, business association contacts, and marketing agencies that can introduce owners or customer service leads ready to let AI handle frequent WhatsApp enquiries." },
+          { title: "Midstream — Solution partners", body: "CRM implementers, booking-system providers, and digital agencies that can combine their solutions with Tonric’s AI agent for shared clients." },
+          { title: "Downstream — Delivery suppliers", body: "AI model, messaging platform and cloud providers, plus integration specialists, whom Tonric may directly pay for products or services needed to deliver the solution." },
         ],
         template:
-          "Hi [Name], I’d like to introduce you to Eric Lam, Co-founder & CEO of Tonric. You mentioned that your team [describe the WhatsApp challenge]. Eric’s team is building a 24/7 WhatsApp customer service agent and CRM for SMEs. I thought it would be useful for you to compare notes on how you handle enquiries and follow-ups today. Eric, [Name] leads [function] at [company].",
+          "Hi [Name], I’d like to introduce you to Eric Lam, Co-founder & CEO of Tonric. You mentioned that your team [describe the WhatsApp challenge]. Eric’s team offers an AI-powered WhatsApp agent and intelligent CRM that answers customers 24/7 and tracks every follow-up automatically. I thought it would be useful for you to explore how AI could handle your enquiries. Eric, [Name] leads [function] at [company].",
       },
     },
     zh: {
@@ -78,20 +78,20 @@ export const defaultCard: CardData = {
       ref: {
         heading: "商業引薦與合作",
         positioning:
-          "拓域創科正為香港中小企開發 24 小時 WhatsApp 客戶服務助理及客戶關係管理系統（CRM），目標是協助團隊在非辦公時間回覆常見查詢，並集中管理客戶對話及跟進事項。",
-        ask: "希望你介紹我認識已用 WhatsApp 服務客戶的香港中小企東主或客戶服務主管，尤其是難以及時回覆非辦公時間查詢，或容易遺漏跟進的團隊。我特別希望認識經常處理預約、收費或可預約時段查詢的服務型企業。",
+          "拓域創科的 AI WhatsApp 客服助理及智能客戶關係管理系統（CRM），協助香港中小企全天候 24 小時服務客戶。AI 能理解每項查詢、以自然語言即時回覆，並自動記錄每段對話、潛在客戶及跟進事項，集中於同一個智能平台。",
+        ask: "希望你介紹我認識已用 WhatsApp 服務客戶的香港中小企東主或客戶服務主管，尤其是希望由 AI 在非辦公時間即時回覆、並自動跟進每位客戶的團隊。我特別希望認識經常處理預約、收費或可預約時段查詢的服務型企業。",
         cues: [
           "「客人收舖後都會 WhatsApp 我哋，但要等到第二日先有人覆。」",
           "「我哋日日都要答同樣嘅問題，例如收費、預約同有冇位。」",
           "「幾個同事一齊睇 WhatsApp，但有時唔知邊個覆咗，或者邊個客仲未跟進。」",
         ],
         network: [
-          { title: "上游：引薦夥伴", body: "可引薦經常透過 WhatsApp 處理客戶查詢的企業東主或客服主管，例如中小企顧問、商會聯絡人及市場推廣公司。" },
-          { title: "中游：方案合作夥伴", body: "可與拓域創科共同為客戶提供方案的夥伴，例如 CRM 實施商、預約系統供應商及數碼服務公司。" },
-          { title: "下游：交付供應商", body: "拓域創科可能直接付費採購產品或服務的交付供應商，例如訊息平台服務商、雲端供應商及系統整合專家。" },
+          { title: "上游：引薦夥伴", body: "可引薦希望以 AI 處理大量 WhatsApp 查詢的企業東主或客服主管，例如中小企顧問、商會聯絡人及市場推廣公司。" },
+          { title: "中游：方案合作夥伴", body: "可將自家方案與拓域創科 AI 助理結合、共同服務客戶的夥伴，例如 CRM 實施商、預約系統供應商及數碼服務公司。" },
+          { title: "下游：交付供應商", body: "拓域創科可能直接付費採購產品或服務的交付供應商，例如 AI 模型、訊息平台及雲端服務商，以及系統整合專家。" },
         ],
         template:
-          "你好，[姓名]，想介紹拓域創科聯合創辦人兼行政總裁 Eric Lam 畀你認識。你之前提過團隊［描述 WhatsApp 客服遇到的問題］。Eric 嘅團隊正為中小企開發 24 小時 WhatsApp 客服助理同 CRM，我諗你哋可以交流下現時點樣處理查詢同跟進。Eric，［姓名］負責［公司］嘅［職能］。",
+          "你好，[姓名]，想介紹拓域創科聯合創辦人兼行政總裁 Eric Lam 畀你認識。你之前提過團隊［描述 WhatsApp 客服遇到的問題］。Eric 嘅團隊提供 AI WhatsApp 客服助理同智能 CRM，可以 24 小時自動回覆客人，仲會自動跟進每個查詢，我諗你哋可以傾下點樣用 AI 處理你哋嘅查詢。Eric，［姓名］負責［公司］嘅［職能］。",
       },
     },
   },
@@ -109,7 +109,6 @@ export const uiText = {
     introLabel: "Make an introduction", copyIntro: "Copy Introduction", introCopied: "Introduction copied",
     consent: "Check that both people are comfortable with the introduction before sharing their contact details.",
     emailEric: "Email Eric", emailSubject: "Tonric referral or partnership introduction",
-    inDevelopment: "In development",
   },
   zh: {
     save: "儲存聯絡人", share: "分享名片", showQr: "顯示二維碼",
@@ -122,7 +121,6 @@ export const uiText = {
     introLabel: "作出引薦", copyIntro: "複製引薦訊息", introCopied: "已複製引薦訊息",
     consent: "分享聯絡資料前，請先確認雙方都同意接受引薦。",
     emailEric: "電郵聯絡 Eric", emailSubject: "拓域創科｜商業引薦或合作",
-    inDevelopment: "開發中",
   },
 } as const;
 

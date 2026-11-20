@@ -41,7 +41,7 @@ describe("referral content", () => {
     expect(defaultCard.linkedin.url).toBe("https://www.linkedin.com/in/ericlamhf/");
   });
   it("referral ask is the WhatsApp customer service focus in both languages", () => {
-    expect(defaultCard.text.en.ref.ask).toContain("already serves customers on WhatsApp");
+    expect(defaultCard.text.en.ref.ask).toContain("serves customers on WhatsApp and wants AI");
     expect(defaultCard.text.zh.ref.ask).toContain("已用 WhatsApp 服務客戶");
     expect(JSON.stringify(defaultCard.text)).not.toMatch(/shipment|付運/);
   });

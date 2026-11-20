@@ -66,8 +66,7 @@ export function ReferralSection({ card, lang, ui, onCopied }: { card: CardData; 
       <h2 id="ref-h" className="text-lg font-semibold">{r.heading}</h2>
       {r.positioning && (
         <div className="mt-2">
-          <span className="inline-block rounded-full border border-border px-2 py-0.5 text-[0.7rem] font-medium text-muted-foreground">{ui.inDevelopment}</span>
-          <p className="mt-2 text-sm leading-relaxed text-foreground/90">{r.positioning}</p>
+          <p className="text-sm leading-relaxed text-foreground/90">{r.positioning}</p>
         </div>
       )}
 
