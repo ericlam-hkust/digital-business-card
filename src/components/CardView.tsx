@@ -108,8 +108,6 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
           <p className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground">
             <MapPin className="size-3.5 text-primary" aria-hidden /> {content.location}
           </p>
-          <p className="mt-3 text-[0.95rem] leading-relaxed text-foreground/90">{content.intro}</p>
-
           {rows.length > 0 && (
             <nav aria-label="Quick contact" className="mt-4 flex justify-center gap-3">
               {rows.map((r) => (
@@ -120,6 +118,9 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
               ))}
             </nav>
           )}
+
+          <p className="mt-5 text-[0.95rem] leading-relaxed text-foreground/90">{content.intro}</p>
+          <AboutSection card={card} lang={lang} ui={t} embedded />
 
           <button
             onClick={() => downloadVCard(card)}
@@ -138,8 +139,6 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
           {manualUrl && <ManualCopy label={t.copyManual} url={manualUrl} />}
 
           </section>
-
-        <AboutSection card={card} lang={lang} ui={t} />
 
         <section className="mt-4 rounded-3xl border border-border bg-card px-5 py-2 sm:px-6">
           <ul className="divide-y divide-border">

@@ -25,11 +25,11 @@ function Panel({ label, openLabel, children }: { label: string; openLabel?: stri
   );
 }
 
-export function AboutSection({ card, lang, ui }: { card: CardData; lang: Lang; ui: UiText }) {
+export function AboutSection({ card, lang, ui, embedded }: { card: CardData; lang: Lang; ui: UiText; embedded?: boolean }) {
   const bio = card.text[lang].bio.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
   if (!bio.length) return null;
   return (
-    <section aria-labelledby="about-h" className="mt-4 rounded-3xl border border-border bg-card p-5 sm:p-6">
+    <section aria-labelledby="about-h" className={embedded ? "mt-5 border-t border-border pt-4" : "mt-4 rounded-3xl border border-border bg-card p-5 sm:p-6"}>
       <h2 id="about-h" className="text-lg font-semibold">{ui.aboutHeading}</h2>
       <div className="mt-2">
         {bio.map((p) => (
