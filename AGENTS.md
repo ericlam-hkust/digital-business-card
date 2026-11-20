@@ -28,3 +28,8 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- All card profile data, links, translations and toggles live in `src/config/card.config.ts`; components read only from it (single place to edit).
+- QR codes are generated locally with the `qrcode` package; never call third-party QR services.
+- Brand colours are `--tonric-*` CSS variables in `src/styles.css`; the app always renders in dark mode.
