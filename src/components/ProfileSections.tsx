@@ -52,9 +52,9 @@ function BrandLogos({ card, ui }: { card: CardData; ui: UiText }) {
         {names.map((n) => {
           const b = findBrand(n);
           return (
-            <li key={n} className="flex h-14 items-center justify-center rounded-xl bg-brand-tile px-3" title={b?.name ?? n}>
+            <li key={n} className="flex h-20 items-center justify-center rounded-xl bg-brand-tile px-2" title={b?.name ?? n}>
               {b ? (
-                <img src={b.logo} alt={b.name} loading="lazy" className="max-h-7 max-w-full object-contain" />
+                <img src={b.logo} alt={b.name} loading="lazy" className="max-h-10 max-w-full object-contain" />
               ) : (
                 <OnlineLogo name={n} />
               )}
@@ -70,7 +70,7 @@ function OnlineLogo({ name }: { name: string }) {
   const url = onlineLogoUrl(name);
   const [failed, setFailed] = useState(false);
   if (!url || failed) return <span className="text-center text-xs font-semibold leading-tight text-brand-tile-foreground">{name}</span>;
-  return <img src={url} alt={name} loading="lazy" onError={() => setFailed(true)} className="h-9 w-auto max-w-full object-contain" />;
+  return <img src={url} alt={name} loading="lazy" onError={() => setFailed(true)} className="h-14 w-auto max-w-full object-contain" />;
 }
 
 export function ReferralSection({ card, lang, ui, onCopied }: { card: CardData; lang: Lang; ui: UiText; onCopied: (msg: string) => void }) {
