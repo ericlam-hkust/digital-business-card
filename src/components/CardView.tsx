@@ -69,7 +69,7 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
     { show: card.linkedin.enabled && !!card.linkedin.url, href: card.linkedin.url, icon: Linkedin, label: t.linkedin, value: card.linkedin.url.replace(/^https?:\/\/(www\.)?/, ""), ext: true },
     { show: card.whatsapp.enabled && !!card.whatsapp.number, href: `https://wa.me/${card.whatsapp.number}`, icon: MessageCircle, label: t.whatsapp, value: "+" + card.whatsapp.number, ext: true },
   ].filter((r) => r.show);
-  const socials = { facebook: { enabled: false, url: "" }, instagram: { enabled: false, url: "" }, linkedin: { enabled: false, url: "" }, ...card.socials };
+  const socials = card.socials;
   const strip = (u: string) => u.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
   const company = [
     { show: card.show.website && !!card.website, href: card.website, icon: Globe, label: t.website },
