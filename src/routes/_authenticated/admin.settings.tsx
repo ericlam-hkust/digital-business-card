@@ -140,12 +140,7 @@ function SettingsPage() {
   const fmt = (t: string | null) => (t ? new Date(t).toLocaleString() : "Never");
 
   const Bi = ({ label, field, area }: { label: string; field: (l: Lang) => Path; area?: boolean }) => (
-    <fieldset className="space-y-2">
-      <legend className="text-sm font-medium">{label}</legend>
-      {(["en", "zh"] as const).map((l) => (
-        <TextField key={l} label={l === "en" ? "EN" : "繁中"} value={get(draft, field(l)) as string} onChange={set(field(l))} area={area} error={err(field(l))} />
-      ))}
-    </fieldset>
+    <BiField label={label} area={area} values={(["en", "zh"] as const).map((l) => ({ l, value: get(draft, field(l)) as string, onChange: set(field(l)), error: err(field(l)) }))} />
   );
 
   return (
@@ -188,11 +183,11 @@ function SettingsPage() {
             </div>
             <TextField label="Company" value={draft.company} onChange={set(["company"])} error={err(["company"])} />
             <TextField label="Company (繁中)" value={draft.companyZh} onChange={set(["companyZh"])} />
-            <Bi label="Title" field={(l) => ["text", l, "title"]} />
-            <Bi label="Location" field={(l) => ["text", l, "location"]} />
-            <Bi label="Short introduction" field={(l) => ["text", l, "intro"]} area />
-            <Bi label="Tagline" field={(l) => ["text", l, "tagline"]} />
-            <Bi label="Full bio (leave a blank line between paragraphs)" field={(l) => ["text", l, "bio"]} area />
+            {Bi({ label: "Title", field: (l) => ["text", l, "title"] })}
+            {Bi({ label: "Location", field: (l) => ["text", l, "location"] })}
+            {Bi({ label: "Short introduction", field: (l) => ["text", l, "intro"], area: true })}
+            {Bi({ label: "Tagline", field: (l) => ["text", l, "tagline"] })}
+            {Bi({ label: "Full bio (leave a blank line between paragraphs)", field: (l) => ["text", l, "bio"], area: true })}
             <p className="text-xs text-muted-foreground">Headshot: photo uploads aren't available yet. The current photo stays, and the "{cardConfig.initials}" monogram shows if it's removed.</p>
           </Section>
 
@@ -223,17 +218,17 @@ function SettingsPage() {
               Use latest suggested referral wording
             </button>
             <p className="text-xs text-muted-foreground">Replaces all referral text below in both languages. Then Preview and Publish Changes.</p>
-            <Bi label="Section heading" field={(l) => ["text", l, "ref", "heading"]} />
-            <Bi label="Product positioning" field={(l) => ["text", l, "ref", "positioning"]} area />
-            <Bi label="Current referral ask" field={(l) => ["text", l, "ref", "ask"]} area />
-            {[0, 1, 2].map((i) => <Bi key={i} label={`Signal ${i + 1}`} field={(l) => ["text", l, "ref", "cues", i]} area />)}
+            {Bi({ label: "Section heading", field: (l) => ["text", l, "ref", "heading"] })}
+            {Bi({ label: "Product positioning", field: (l) => ["text", l, "ref", "positioning"], area: true })}
+            {Bi({ label: "Current referral ask", field: (l) => ["text", l, "ref", "ask"], area: true })}
+            {[0, 1, 2].map((i) => <div key={i}>{Bi({ label: `Signal ${i + 1}`, field: (l) => ["text", l, "ref", "cues", i], area: true })}</div>)}
             {[0, 1, 2].map((i) => (
               <div key={i} className="space-y-3">
-                <Bi label={`Partner category ${i + 1} — title`} field={(l) => ["text", l, "ref", "network", i, "title"]} />
-                <Bi label={`Partner category ${i + 1} — description`} field={(l) => ["text", l, "ref", "network", i, "body"]} area />
+                {Bi({ label: `Partner category ${i + 1} — title`, field: (l) => ["text", l, "ref", "network", i, "title"] })}
+                {Bi({ label: `Partner category ${i + 1} — description`, field: (l) => ["text", l, "ref", "network", i, "body"], area: true })}
               </div>
             ))}
-            <Bi label="Copyable introduction (keep the [brackets] for people to fill in)" field={(l) => ["text", l, "ref", "template"]} area />
+            {Bi({ label: "Copyable introduction (keep the [brackets] for people to fill in)", field: (l) => ["text", l, "ref", "template"], area: true })}
           </Section>
 
           <Section title="Sharing">
@@ -316,5 +311,16 @@ function Toggle({ label, checked, onChange }: { label: string; checked: boolean;
       <span>{label}</span>
       <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} className="size-5 shrink-0 accent-primary" />
     </label>
+  );
+}
+
+function BiField({ label, area, values }: { label: string; area?: boolean | undefined; values: { l: Lang; value: string; onChange: (v: string) => void; error?: string | undefined }[] }) {
+  return (
+    <fieldset className="space-y-2">
+      <legend className="text-sm font-medium">{label}</legend>
+      {values.map((v) => (
+        <TextField key={v.l} label={v.l === "en" ? "EN" : "繁中"} value={v.value} onChange={v.onChange} area={area} error={v.error} />
+      ))}
+    </fieldset>
   );
 }
