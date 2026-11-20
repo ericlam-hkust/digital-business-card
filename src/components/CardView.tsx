@@ -149,7 +149,7 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
           <AboutSection card={card} lang={lang} ui={t} embedded />
 
           <button
-            onClick={() => downloadVCard(card)}
+            onClick={() => (banner ? downloadVCard(card) : window.location.assign("/api/public/vcard"))}
             className="mt-5 flex h-13 w-full items-center justify-center gap-2 rounded-2xl bg-primary text-base font-semibold text-primary-foreground transition hover:brightness-105 active:scale-[0.99]"
           >
             <Download className="size-5" aria-hidden /> {t.save}

@@ -9,7 +9,10 @@ import { defaultCard } from "@/config/card.config";
 export type PublishedCard = { card: CardData; source: "published" | "built-in" };
 
 /** Public read of the published card. Falls back to built-in content if none is valid. */
-export const getPublishedCard = createServerFn({ method: "GET" }).handler(async (): Promise<PublishedCard> => {
+export const getPublishedCard = createServerFn({ method: "GET" }).handler(() => loadPublishedCard());
+
+/** Server-only loader shared by the card page and the contact file download. */
+export async function loadPublishedCard(): Promise<PublishedCard> {
   const fallback: PublishedCard = { card: toPublic(defaultCard), source: "built-in" };
   try {
     const url = process.env["SUPABASE_URL"];
@@ -38,7 +41,7 @@ export const getPublishedCard = createServerFn({ method: "GET" }).handler(async 
     console.error("Could not load published card", e);
     return fallback;
   }
-});
+}
 
 export type AdminState =
   | { isOwner: false }

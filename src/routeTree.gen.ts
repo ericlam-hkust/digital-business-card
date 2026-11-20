@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as EricRouteImport } from './routes/eric'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
+import { Route as ApiPublicVcardRouteImport } from './routes/api/public/vcard'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,18 +41,25 @@ const AuthenticatedAdminSettingsRoute =
     path: '/admin/settings',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiPublicVcardRoute = ApiPublicVcardRouteImport.update({
+  id: '/api/public/vcard',
+  path: '/api/public/vcard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/eric': typeof EricRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/api/public/vcard': typeof ApiPublicVcardRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/eric': typeof EricRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/api/public/vcard': typeof ApiPublicVcardRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -60,12 +68,14 @@ export interface FileRoutesById {
   '/eric': typeof EricRoute
   '/admin/login': typeof AdminLoginRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/api/public/vcard': typeof ApiPublicVcardRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/eric' | '/admin/login' | '/admin/settings'
+  fullPaths:
+    '/' | '/eric' | '/admin/login' | '/admin/settings' | '/api/public/vcard'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/eric' | '/admin/login' | '/admin/settings'
+  to: '/' | '/eric' | '/admin/login' | '/admin/settings' | '/api/public/vcard'
   id:
     | '__root__'
     | '/'
@@ -73,6 +83,7 @@ export interface FileRouteTypes {
     | '/eric'
     | '/admin/login'
     | '/_authenticated/admin/settings'
+    | '/api/public/vcard'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -80,6 +91,7 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   EricRoute: typeof EricRoute
   AdminLoginRoute: typeof AdminLoginRoute
+  ApiPublicVcardRoute: typeof ApiPublicVcardRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -119,6 +131,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/vcard': {
+      id: '/api/public/vcard'
+      path: '/api/public/vcard'
+      fullPath: '/api/public/vcard'
+      preLoaderRoute: typeof ApiPublicVcardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -138,6 +157,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   EricRoute: EricRoute,
   AdminLoginRoute: AdminLoginRoute,
+  ApiPublicVcardRoute: ApiPublicVcardRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

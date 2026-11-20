@@ -72,7 +72,7 @@ export const cardDataSchema = z.object({
   /** Past employers shown as logos under About Eric; older saved versions get the defaults. */
   brands: z
     .object({ visible: z.boolean(), names: z.array(z.string().trim().max(60)).max(12) })
-    .default({ visible: true, names: ["PUMA", "Li & Fung", "Pandora", "Tiffany & Co.", "Nike"] }),
+    .default({ visible: true, names: ["PUMA", "Pandora", "Tiffany & Co.", "Nike"] }),
   /** Uploaded headshot as a small JPEG data URL; empty uses the built-in photo. */
   headshot: z.string().max(400_000).refine((v) => v === "" || v.startsWith("data:image/"), "Invalid photo").default(""),
   /** Uploaded cover banner as a JPEG data URL; empty uses the built-in Tonric banner. */
