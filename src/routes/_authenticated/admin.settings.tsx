@@ -225,8 +225,11 @@ function SettingsPage() {
             <TextField label="Phone (international format)" type="tel" value={draft.phone} onChange={set(["phone"])} error={err(["phone"])} />
             <Toggle label="Show phone on card" checked={draft.show.phone} onChange={set(["show", "phone"])} />
             <Toggle label="Still include a hidden email or phone in the downloadable contact file" checked={draft.includeHiddenInContactFile} onChange={set(["includeHiddenInContactFile"])} />
-            <TextField label="Website (https://)" type="url" value={draft.website} onChange={set(["website"])} error={err(["website"])} />
-            <Toggle label="Show website on card" checked={draft.show.website} onChange={set(["show", "website"])} />
+            <label className="block text-sm">
+              <span className="font-medium">Digital Card link (read-only, this card's own address)</span>
+              <input readOnly value={url} className="mt-1 h-11 w-full rounded-xl border border-border bg-secondary px-3 text-sm text-muted-foreground" />
+            </label>
+            <Toggle label="Show Digital Card on card" checked={draft.show.digitalCard} onChange={set(["show", "digitalCard"])} />
             <TextField label="LinkedIn URL (https://)" type="url" value={draft.linkedin.url} onChange={set(["linkedin", "url"])} error={err(["linkedin", "url"])} />
             <Toggle label="Show LinkedIn" checked={draft.linkedin.enabled} onChange={set(["linkedin", "enabled"])} />
             <TextField label="Eric's own WhatsApp number (digits with country code) or WhatsApp link (https://wa.me/...)" value={draft.whatsapp.number} onChange={set(["whatsapp", "number"])} error={err(["whatsapp", "number"])} />
@@ -235,13 +238,15 @@ function SettingsPage() {
           </Section>
 
           <Section title="Tonric company socials">
+            <TextField label="Tonric website (https://)" type="url" value={draft.website} onChange={set(["website"])} error={err(["website"])} />
+            <Toggle label="Show company website" checked={draft.show.website} onChange={set(["show", "website"])} />
             <TextField label="Tonric Facebook page (https://)" type="url" value={draft.socials.facebook.url} onChange={set(["socials", "facebook", "url"])} error={err(["socials", "facebook", "url"])} />
             <Toggle label="Show Facebook" checked={draft.socials.facebook.enabled} onChange={set(["socials", "facebook", "enabled"])} />
             <TextField label="Tonric Instagram page (https://)" type="url" value={draft.socials.instagram.url} onChange={set(["socials", "instagram", "url"])} error={err(["socials", "instagram", "url"])} />
             <Toggle label="Show Instagram" checked={draft.socials.instagram.enabled} onChange={set(["socials", "instagram", "enabled"])} />
             <TextField label="Tonric LinkedIn company page (https://)" type="url" value={draft.socials.linkedin.url} onChange={set(["socials", "linkedin", "url"])} error={err(["socials", "linkedin", "url"])} />
             <Toggle label="Show LinkedIn page" checked={draft.socials.linkedin.enabled} onChange={set(["socials", "linkedin", "enabled"])} />
-            <p className="text-xs text-muted-foreground">Shown with the Tonric website under "Follow Tonric" on the card.</p>
+            <p className="text-xs text-muted-foreground">These are Tonric's company pages, shown under "Follow Tonric" and "Tonric's Social Pages" on the card.</p>
           </Section>
 
           <Section title="Referrals">
