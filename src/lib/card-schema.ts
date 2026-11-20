@@ -71,8 +71,8 @@ export const cardDataSchema = z.object({
     }),
   /** Past employers shown as logos under About Eric; older saved versions get the defaults. */
   brands: z
-    .object({ visible: z.boolean(), names: z.array(z.string().trim().max(60)).max(12) })
-    .default({ visible: true, names: ["PUMA", "Pandora", "Tiffany & Co.", "Nike"] }),
+    .object({ visible: z.boolean(), names: z.array(z.string().trim().max(60)).max(12), logoSize: z.number().int().min(50).max(200).default(100) })
+    .default({ visible: true, names: ["PUMA", "Pandora", "Tiffany & Co.", "Nike"], logoSize: 100 }),
   /** Uploaded headshot as a small JPEG data URL; empty uses the built-in photo. */
   headshot: z.string().max(400_000).refine((v) => v === "" || v.startsWith("data:image/"), "Invalid photo").default(""),
   /** Social-sized rendition of the uploaded headshot; empty uses the built-in share image. */

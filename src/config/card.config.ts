@@ -47,7 +47,7 @@ export const defaultCard: CardData = {
     instagram: { enabled: true, url: "https://www.instagram.com/tonric.ai/" },
     linkedin: { enabled: true, url: "https://www.linkedin.com/company/tonric" },
   },
-  brands: { visible: true, names: ["PUMA", "Pandora", "Tiffany & Co.", "Nike"] },
+  brands: { visible: true, names: ["PUMA", "Pandora", "Tiffany & Co.", "Nike"], logoSize: 100 },
   sharing: {
     title: "Eric Lam | Tonric Limited",
     description: "Eric Lam, Co-founder & CEO of Tonric Limited (拓域創科). Hong Kong AI solutions and SaaS. Save my contact in one tap.",

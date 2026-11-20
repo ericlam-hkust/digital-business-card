@@ -45,6 +45,7 @@ export function AboutSection({ card, lang, ui, embedded }: { card: CardData; lan
 function BrandLogos({ card, ui }: { card: CardData; ui: UiText }) {
   const names = card.brands.visible ? card.brands.names.map((n) => n.trim()).filter(Boolean) : [];
   if (!names.length) return null;
+  const k = (card.brands.logoSize ?? 100) / 100;
   return (
     <div className="mt-4">
       <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{ui.brandsLabel}</h3>
@@ -52,11 +53,11 @@ function BrandLogos({ card, ui }: { card: CardData; ui: UiText }) {
         {names.map((n) => {
           const b = findBrand(n);
           return (
-            <li key={n} className="flex h-20 items-center justify-center rounded-xl bg-brand-tile px-2" title={b?.name ?? n}>
+            <li key={n} style={{ height: `${5 * k}rem` }} className="flex items-center justify-center rounded-xl bg-brand-tile px-2" title={b?.name ?? n}>
               {b ? (
-                <img src={b.logo} alt={b.name} loading="lazy" className="max-h-10 max-w-full object-contain" />
+                <img src={b.logo} alt={b.name} loading="lazy" style={{ maxHeight: `${2.5 * k}rem` }} className="max-w-full object-contain" />
               ) : (
-                <OnlineLogo name={n} />
+                <OnlineLogo name={n} scale={k} />
               )}
             </li>
           );
@@ -66,11 +67,11 @@ function BrandLogos({ card, ui }: { card: CardData; ui: UiText }) {
   );
 }
 
-function OnlineLogo({ name }: { name: string }) {
+function OnlineLogo({ name, scale }: { name: string; scale: number }) {
   const url = onlineLogoUrl(name);
   const [failed, setFailed] = useState(false);
   if (!url || failed) return <span className="text-center text-xs font-semibold leading-tight text-brand-tile-foreground">{name}</span>;
-  return <img src={url} alt={name} loading="lazy" onError={() => setFailed(true)} className="h-14 w-auto max-w-full object-contain" />;
+  return <img src={url} alt={name} loading="lazy" onError={() => setFailed(true)} style={{ height: `${3.5 * scale}rem` }} className="w-auto max-w-full object-contain" />;
 }
 
 export function ReferralSection({ card, lang, ui, onCopied }: { card: CardData; lang: Lang; ui: UiText; onCopied: (msg: string) => void }) {

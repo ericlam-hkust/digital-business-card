@@ -202,6 +202,11 @@ function SettingsPage() {
               {draft.brands.names.filter((n) => n.trim()).map((n) => `${n.trim()}: ${findBrand(n) ? "logo found" : "looked up online (text if not found)"}`).join(" · ") || "No brands listed."}
               {" "}Logos available: PUMA, Li & Fung, Pandora, Tiffany & Co., Nike.
             </p>
+            <label className="block text-sm">
+              <span className="font-medium">Logo size: {draft.brands.logoSize}%</span>
+              <input type="range" min={50} max={200} step={5} value={draft.brands.logoSize} onChange={(e) => set(["brands", "logoSize"])(Number(e.target.value))} className="mt-2 w-full accent-primary" aria-label="Logo size" />
+              <span className="mt-1 flex justify-between text-xs text-muted-foreground"><span>Smaller</span><button type="button" onClick={() => set(["brands", "logoSize"])(100)} className="underline">Reset to 100%</button><span>Bigger</span></span>
+            </label>
             <Toggle label="Show brand logos under About Eric" checked={draft.brands.visible} onChange={set(["brands", "visible"])} />
             <p className="text-xs text-muted-foreground">Your published headshot is also used when your card link is shared. The "{cardConfig.initials}" monogram shows if no photo is available.</p>
           </Section>
