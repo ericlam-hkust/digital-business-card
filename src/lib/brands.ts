@@ -26,5 +26,5 @@ export function simpleIconSlug(name: string): string {
 /** Online logo address tried when a name is not in the local catalogue. */
 export function onlineLogoUrl(name: string): string | null {
   const slug = simpleIconSlug(name.trim());
-  return slug ? `https://cdn.simpleicons.org/${slug}/ffffff` : null;
+  return slug ? `https://cdn.simpleicons.org/${slug}/1f1f1f` : null;
 }
