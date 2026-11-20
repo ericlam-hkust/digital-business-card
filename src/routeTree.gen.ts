@@ -10,8 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SlugRouteImport } from './routes/$slug'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
-import { Route as EricRouteImport } from './routes/eric'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as ApiPublicShareHeadshotRouteImport } from './routes/api/public/share-headshot'
@@ -22,13 +22,13 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
+const SlugRoute = SlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EricRoute = EricRouteImport.update({
-  id: '/eric',
-  path: '/eric',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
@@ -55,7 +55,7 @@ const ApiPublicVcardRoute = ApiPublicVcardRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/eric': typeof EricRoute
+  '/$slug': typeof SlugRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/api/public/share-headshot': typeof ApiPublicShareHeadshotRoute
@@ -63,7 +63,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/eric': typeof EricRoute
+  '/$slug': typeof SlugRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/api/public/share-headshot': typeof ApiPublicShareHeadshotRoute
@@ -73,7 +73,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/eric': typeof EricRoute
+  '/$slug': typeof SlugRoute
   '/admin/login': typeof AdminLoginRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/api/public/share-headshot': typeof ApiPublicShareHeadshotRoute
@@ -83,7 +83,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/eric'
+    | '/$slug'
     | '/admin/login'
     | '/admin/settings'
     | '/api/public/share-headshot'
@@ -91,7 +91,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/eric'
+    | '/$slug'
     | '/admin/login'
     | '/admin/settings'
     | '/api/public/share-headshot'
@@ -100,7 +100,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
-    | '/eric'
+    | '/$slug'
     | '/admin/login'
     | '/_authenticated/admin/settings'
     | '/api/public/share-headshot'
@@ -110,7 +110,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
-  EricRoute: typeof EricRoute
+  SlugRoute: typeof SlugRoute
   AdminLoginRoute: typeof AdminLoginRoute
   ApiPublicShareHeadshotRoute: typeof ApiPublicShareHeadshotRoute
   ApiPublicVcardRoute: typeof ApiPublicVcardRoute
@@ -125,18 +125,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$slug': {
+      id: '/$slug'
+      path: '/$slug'
+      fullPath: '/$slug'
+      preLoaderRoute: typeof SlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/eric': {
-      id: '/eric'
-      path: '/eric'
-      fullPath: '/eric'
-      preLoaderRoute: typeof EricRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/login': {
@@ -184,7 +184,7 @@ const AuthenticatedRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
-  EricRoute: EricRoute,
+  SlugRoute: SlugRoute,
   AdminLoginRoute: AdminLoginRoute,
   ApiPublicShareHeadshotRoute: ApiPublicShareHeadshotRoute,
   ApiPublicVcardRoute: ApiPublicVcardRoute,

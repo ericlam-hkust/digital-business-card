@@ -36,3 +36,5 @@ use the editor.
 - QR codes are generated locally with the `qrcode` package; never call third-party QR services.
 - Brand colours are `--tonric-*` CSS variables in `src/styles.css`; the app always renders in dark mode.
 - Past-employer logos are local SVGs in `public/brands/`, matched to company names by `findBrand` in `src/lib/brands.ts`; unknown names show as text. Why: no third-party logo services, and settings only store names.
+
+- Cards are per person, keyed by a slug (`public.cards`); public page is `/$slug`, card rows are (slug, kind). Every editor in `card_owner` can edit every card, via `save_card_draft_for`/`publish_card_for`. Why: co-founders manage each other's cards from one settings page.

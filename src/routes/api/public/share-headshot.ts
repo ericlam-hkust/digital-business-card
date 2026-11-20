@@ -11,8 +11,11 @@ const imageHeaders = {
 export const Route = createFileRoute("/api/public/share-headshot")({
   server: {
     handlers: {
-      GET: async () => {
-        const { card } = await loadPublishedCard();
+      GET: async ({ request }) => {
+        const slug = new URL(request.url).searchParams.get("slug") || "eric";
+        const loaded = /^[a-z0-9-]{2,30}$/.test(slug) ? await loadPublishedCard(slug) : null;
+        if (!loaded) return new Response("Card not found", { status: 404 });
+        const { card } = loaded;
         const bytes = decodeJpegDataUrl(card.shareHeadshot || card.headshot);
         if (!bytes) {
           return new Response(null, {

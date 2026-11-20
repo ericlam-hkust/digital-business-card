@@ -34,19 +34,43 @@ export type Database = {
           data: Json
           kind: string
           published_at: string | null
+          slug: string
           updated_at: string
         }
         Insert: {
           data: Json
           kind: string
           published_at?: string | null
+          slug?: string
           updated_at?: string
         }
         Update: {
           data?: Json
           kind?: string
           published_at?: string | null
+          slug?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      cards: {
+        Row: {
+          created_at: string
+          display_name: string
+          slug: string
+          sort: number
+        }
+        Insert: {
+          created_at?: string
+          display_name: string
+          slug: string
+          sort?: number
+        }
+        Update: {
+          created_at?: string
+          display_name?: string
+          slug?: string
+          sort?: number
         }
         Relationships: []
       }
@@ -57,7 +81,15 @@ export type Database = {
     Functions: {
       is_card_owner: { Args: never; Returns: boolean }
       publish_card: { Args: { _draft: Json; _public: Json }; Returns: string }
+      publish_card_for: {
+        Args: { _draft: Json; _public: Json; _slug: string }
+        Returns: string
+      }
       save_card_draft: { Args: { _draft: Json }; Returns: string }
+      save_card_draft_for: {
+        Args: { _draft: Json; _slug: string }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never

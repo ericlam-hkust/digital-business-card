@@ -15,6 +15,20 @@
       "when": 1795172227103,
       "tag": "0001_card_photos_policies",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1795192314028,
+      "tag": "0002_migration",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1795192337284,
+      "tag": "0003_migration",
+      "breakpoints": true
     }
   ]
 }

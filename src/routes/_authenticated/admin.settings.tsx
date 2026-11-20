@@ -46,7 +46,8 @@ function SettingsPage() {
   const fetchState = useServerFn(getAdminState);
   const save = useServerFn(saveDraft);
   const publish = useServerFn(publishCard);
-  const q = useQuery({ queryKey: ["admin-state"], queryFn: () => fetchState(), retry: false });
+  const [slug, setSlug] = useState("eric");
+  const q = useQuery({ queryKey: ["admin-state", slug], queryFn: () => fetchState({ data: { slug } }), retry: false });
 
   const [draft, setDraft] = useState<CardData | null>(null);
   const [saved, setSaved] = useState<string>("");
@@ -58,13 +59,13 @@ function SettingsPage() {
   const [confirmOpen, setConfirmOpen] = useState(false);
 
   useEffect(() => {
-    if (q.data?.isOwner) {
+    if (q.data?.isOwner && q.data.slug === slug) {
       setDraft(q.data.draft);
       setSaved(JSON.stringify(q.data.draft));
       setSavedAt(q.data.draftSavedAt);
       setPublishedAt(q.data.publishedAt);
     }
-  }, [q.data]);
+  }, [q.data, slug]);
 
   const expire = () => navigate({ to: "/admin/login", search: { expired: "1" }, replace: true });
   useEffect(() => {
@@ -77,6 +78,16 @@ function SettingsPage() {
   }, [q.error]);
 
   const dirty = draft !== null && JSON.stringify(draft) !== saved;
+  const switchCard = (next: string) => {
+    if (next === slug) return;
+    if (dirty && !window.confirm("You have unsaved changes on this card. Switch anyway?")) return;
+    setDraft(null);
+    setSaved("");
+    setMsg(null);
+    setMode("edit");
+    setSlug(next);
+  };
+  const cards = q.data?.isOwner ? q.data.cards : [];
   useBlocker({ shouldBlockFn: () => dirty && !window.confirm("You have unsaved changes. Leave without saving?"), enableBeforeUnload: () => dirty });
 
   const validation = useMemo(() => (draft ? cardDataSchema.safeParse(draft) : null), [draft]);
@@ -106,14 +117,14 @@ function SettingsPage() {
     setMsg(null);
     try {
       if (kind === "save") {
-        const r = await save({ data: { card: draft } });
+        const r = await save({ data: { slug, card: draft } });
         setSavedAt(r.savedAt);
         setMsg({ kind: "ok", text: "Draft saved. The live card is unchanged." });
       } else {
-        const r = await publish({ data: { card: draft } });
+        const r = await publish({ data: { slug, card: draft } });
         setSavedAt(r.publishedAt);
         setPublishedAt(r.publishedAt);
-        qc.removeQueries({ queryKey: ["published-card"] });
+        qc.removeQueries({ queryKey: ["published-card", slug] });
         setMsg({ kind: "ok", text: "Published. The live card and contact file now show these changes." });
       }
       setSaved(JSON.stringify(draft));
@@ -138,7 +149,7 @@ function SettingsPage() {
 
   const set = (path: Path) => (value: unknown) => setDraft((d) => (d ? setIn(d, path, value) : d));
   const err = (path: Path) => errors[path.join(".")];
-  const { url } = getCardUrl(typeof window !== "undefined" ? window.location.origin : "");
+  const { url } = getCardUrl(typeof window !== "undefined" ? window.location.origin : "", slug);
   const fmt = (t: string | null) => (t ? new Date(t).toLocaleString() : "Never");
 
   const Bi = ({ label, field, area }: { label: string; field: (l: Lang) => Path; area?: boolean }) => (
@@ -155,19 +166,28 @@ function SettingsPage() {
               {dirty ? <span className="text-primary">Unsaved changes</span> : "All changes saved"} · Last published: {fmt(publishedAt)}
             </p>
           </div>
-          <button onClick={signOut} className="h-9 shrink-0 rounded-xl border border-border px-3 text-sm">Sign out</button>
+          <div className="flex shrink-0 items-center gap-2">
+            <label className="sr-only" htmlFor="card-switch">Card being edited</label>
+            <select id="card-switch" value={slug} onChange={(e) => switchCard(e.target.value)} className="h-9 rounded-xl border border-border bg-secondary px-2 text-sm">
+              {cards.map((c) => (
+                <option key={c.slug} value={c.slug}>{c.display_name}</option>
+              ))}
+            </select>
+            <button onClick={signOut} className="h-9 rounded-xl border border-border px-3 text-sm">Sign out</button>
+          </div>
         </div>
-        <div className="mx-auto mt-3 flex max-w-2xl gap-2" role="tablist">
+        <div className="mx-auto mt-3 flex max-w-2xl items-center gap-2" role="tablist">
           {(["edit", "preview"] as const).map((m) => (
             <button key={m} role="tab" aria-selected={mode === m} onClick={() => setMode(m)} className={`h-9 rounded-full px-4 text-sm ${mode === m ? "bg-secondary text-foreground" : "text-muted-foreground"}`}>
               {m === "edit" ? "Edit" : "Preview"}
             </button>
           ))}
+          <a href={`/${slug}`} target="_blank" rel="noreferrer" className="ml-auto text-xs text-muted-foreground underline">Open live card /{slug}</a>
         </div>
       </header>
 
       {mode === "preview" ? (
-        <CardView card={draft} banner={<p className="mb-2 rounded-xl border border-primary/60 bg-primary/10 px-3 py-2 text-center text-sm font-medium text-primary">Draft preview — not live</p>} />
+        <CardView card={draft} slug={slug} banner={<p className="mb-2 rounded-xl border border-primary/60 bg-primary/10 px-3 py-2 text-center text-sm font-medium text-primary">Draft preview — not live</p>} />
       ) : (
         <main className="mx-auto max-w-2xl space-y-4 px-4 py-5">
           {warnings.length > 0 && (

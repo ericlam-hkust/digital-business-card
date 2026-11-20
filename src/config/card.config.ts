@@ -137,9 +137,9 @@ export const uiText = {
 
 export type UiText = (typeof uiText)[Lang];
 
-export function getCardUrl(origin?: string): { url: string; isPreview: boolean } {
-  if (cardConfig.canonicalUrl) return { url: cardConfig.canonicalUrl, isPreview: false };
-  return { url: `${origin ?? ""}${cardConfig.cardPath}`, isPreview: true };
+export function getCardUrl(origin?: string, slug = "eric"): { url: string; isPreview: boolean } {
+  if (cardConfig.canonicalUrl && slug === "eric") return { url: cardConfig.canonicalUrl, isPreview: false };
+  return { url: `${origin ?? ""}/${slug}`, isPreview: true };
 }
 
 /** Introduction text to copy; appends the card link only when a public canonical URL is set. */

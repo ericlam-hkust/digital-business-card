@@ -10,7 +10,7 @@ import { AboutSection, ReferralSection } from "@/components/ProfileSections";
 
 /** The business card itself; used by the public page and the private draft preview. */
 
-export function CardView({ card, banner }: { card: CardData; banner?: ReactNode }) {
+export function CardView({ card, banner, slug = "eric" }: { card: CardData; banner?: ReactNode; slug?: string }) {
   const [lang, setLang] = useState<Lang>("zh");
   const [toast, setToast] = useState<string | null>(null);
   const [manualUrl, setManualUrl] = useState<string | null>(null);
@@ -27,7 +27,9 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
 
   const t = uiText[lang];
   const content = card.text[lang];
-  const { url, isPreview } = getCardUrl(origin);
+  const { url, isPreview } = getCardUrl(origin, slug);
+  const photo = card.headshot || (slug === "eric" ? cardConfig.headshotUrl : null);
+  const initials = `${card.name.first[0] ?? ""}${card.name.last[0] ?? ""}`.toUpperCase();
   const c = cardConfig;
   const phoneE164 = phoneDigits(card.phone);
 
@@ -115,10 +117,10 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
           )}
           <div className="px-5 pb-5 sm:px-6 sm:pb-6">
           <div className="relative z-10 -mt-10 flex items-end gap-4">
-            {card.headshot || c.headshotUrl ? (
-              <img src={card.headshot || c.headshotUrl || ""} alt={t.photoAlt} className="size-24 shrink-0 rounded-full border-4 border-card object-cover ring-2 ring-primary/70" />
+            {photo ? (
+              <img src={photo} alt={t.photoAlt} className="size-24 shrink-0 rounded-full border-4 border-card object-cover ring-2 ring-primary/70" />
             ) : (
-              <div className="grid size-24 shrink-0 place-items-center rounded-full border-4 border-card bg-secondary text-2xl font-semibold text-primary">{c.initials}</div>
+              <div className="grid size-24 shrink-0 place-items-center rounded-full border-4 border-card bg-secondary text-2xl font-semibold text-primary">{initials}</div>
             )}
             {company.length > 0 && (
                 <nav aria-label={lang === "zh" ? "關注拓域創科" : "Follow Tonric"} className="mb-1 ml-auto flex items-center gap-1.5">
@@ -178,7 +180,7 @@ export function CardView({ card, banner }: { card: CardData; banner?: ReactNode 
             </div>
           )}
           <button
-            onClick={() => (banner ? downloadVCard(card) : window.location.assign("/api/public/vcard"))}
+            onClick={() => (banner ? downloadVCard(card) : window.location.assign(`/api/public/vcard?slug=${slug}`))}
             className="mt-4 flex h-13 w-full items-center justify-center gap-2 rounded-2xl bg-primary text-base font-semibold text-primary-foreground transition hover:brightness-105 active:scale-[0.99]"
           >
             <Download className="size-5" aria-hidden /> {t.save}

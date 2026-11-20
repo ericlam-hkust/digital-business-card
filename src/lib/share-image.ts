@@ -6,11 +6,11 @@ export const DYNAMIC_SHARE_IMAGE_PATH = "/api/public/share-headshot";
 export type ShareImage = { path: string; width: number; height: number };
 
 /** Uploaded photos use the public image endpoint; the built-in photo has a static social rendition. */
-export function shareImageForCard(card: Pick<CardData, "headshot" | "shareHeadshot">): ShareImage {
+export function shareImageForCard(card: Pick<CardData, "headshot" | "shareHeadshot">, slug = "eric"): ShareImage {
   if (!card.headshot) return { path: DEFAULT_SHARE_IMAGE_PATH, width: 1200, height: 630 };
   // Older published cards predate the social rendition, but can still share their 400px headshot.
   return {
-    path: DYNAMIC_SHARE_IMAGE_PATH,
+    path: slug === "eric" ? DYNAMIC_SHARE_IMAGE_PATH : `${DYNAMIC_SHARE_IMAGE_PATH}?slug=${slug}`,
     width: card.shareHeadshot ? 1200 : 400,
     height: card.shareHeadshot ? 630 : 400,
   };
